@@ -106,6 +106,7 @@
   -webkit-touch-callout: none;
   user-select: none;
   -webkit-user-select: none;
+  touch-action: manipulation;
 }
 
 .mobile-menu-btn:hover {
@@ -120,6 +121,7 @@
   width: 36px;
   height: auto;
   display: block;
+  pointer-events: none;
 }
 
 .mobile-menu-btn.hidden {
@@ -149,6 +151,31 @@
   transform: none !important;
   opacity: 1 !important;
   transition: none !important;
+}
+
+/* Touch device specific - disable hover effects */
+@media (hover: none) and (pointer: coarse) {
+  .mobile-menu-btn:hover {
+    transform: none;
+  }
+  
+  .mobile-menu-btn:active {
+    transform: none;
+  }
+  
+  .mobile-menu-btn.modal-open,
+  .mobile-menu-btn.modal-open:hover,
+  .mobile-menu-btn.modal-open:active {
+    transform: none;
+    opacity: 0.5;
+  }
+  
+  .mobile-menu-btn.no-hover,
+  .mobile-menu-btn.no-hover:hover,
+  .mobile-menu-btn.no-hover:active {
+    transform: none !important;
+    opacity: 1 !important;
+  }
 }
 
 /* Mobile overlay */
