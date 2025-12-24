@@ -1,0 +1,119 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(10, 10, 10, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 24px;
+}
+
+.modal {
+  background-color: var(--white);
+  border-radius: 20px;
+  max-width: 480px;
+  width: 100%;
+  position: relative;
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.25), 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.modal-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--bg-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-dark);
+  transition: all 0.2s ease;
+  z-index: 10;
+}
+
+.modal-close:hover {
+  background-color: var(--text-dark);
+  color: var(--white);
+  transform: rotate(90deg);
+}
+
+.modal-content {
+  padding: 48px 40px;
+}
+
+.modal-label {
+  display: inline-block;
+  font-family: var(--font-heading);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+
+.modal-title {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: var(--text-dark);
+  line-height: 1.1;
+}
+
+.modal-description {
+  font-size: 17px;
+  line-height: 1.7;
+  color: #555;
+  margin-bottom: 32px;
+}
+
+.modal-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--text-dark);
+  color: var(--white);
+  font-family: var(--font-heading);
+  font-size: 14px;
+  font-weight: 500;
+  padding: 14px 28px;
+  border-radius: 100px;
+  transition: all 0.25s ease;
+}
+
+.modal-link:hover {
+  background-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(255, 107, 53, 0.3);
+}
+
+.modal-link svg {
+  transition: transform 0.25s ease;
+}
+
+.modal-link:hover svg {
+  transform: translate(2px, -2px);
+}
+
+@media (max-width: 540px) {
+  .modal-content {
+    padding: 40px 28px;
+  }
+  
+  .modal-title {
+    font-size: 26px;
+  }
+  
+  .modal-description {
+    font-size: 15px;
+  }
+}
+
