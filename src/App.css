@@ -23,6 +23,25 @@
   width: auto;
   max-width: none;
   object-fit: contain;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* Mobile touch dragging */
+@media (max-width: 768px) {
+  .map-container {
+    touch-action: none;
+    cursor: grab;
+  }
+  
+  .map-container.dragging {
+    cursor: grabbing;
+  }
+  
+  .map-image {
+    transition: none;
+    will-change: transform;
+  }
 }
 
 /* Mobile menu button (shooting star) */
