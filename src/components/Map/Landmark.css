@@ -75,3 +75,30 @@
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.05);
 }
 
+/* Mobile styles - remove hover effects and tap highlights */
+@media (max-width: 768px) {
+  .landmark {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    user-select: none;
+  }
+  
+  .landmark:active {
+    transform: none;
+  }
+  
+  .landmark:hover,
+  .landmark.hovered {
+    transform: none;
+  }
+  
+  .landmark:hover .landmark-image,
+  .landmark.hovered .landmark-image {
+    filter: none;
+  }
+  
+  .landmark-tooltip {
+    display: none;
+  }
+}
+

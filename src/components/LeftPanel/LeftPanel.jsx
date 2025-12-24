@@ -1,10 +1,36 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import './LeftPanel.css';
 
-const LeftPanel = () => {
+const LeftPanel = ({ sidebarOpen = false, onCloseSidebar }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const portraitRef = useRef(null);
+  const prevSidebarOpenRef = useRef(sidebarOpen);
 
-  const toggleMobileMenu = () => {
+  useEffect(() => {
+    // When sidebar closes, force reset the opacity to clear any lingering :active state
+    if (prevSidebarOpenRef.current && !sidebarOpen && portraitRef.current) {
+      // Temporarily remove transition, set opacity, then re-enable transition
+      const element = portraitRef.current;
+      element.style.transition = 'none';
+      element.style.opacity = '1';
+      // Use requestAnimationFrame to ensure the style is applied before re-enabling transition
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          element.style.transition = '';
+          element.style.opacity = '';
+        });
+      });
+    }
+    prevSidebarOpenRef.current = sidebarOpen;
+  }, [sidebarOpen]);
+
+  const handlePortraitClick = () => {
+    // If sidebar is open, close it
+    if (sidebarOpen && onCloseSidebar) {
+      onCloseSidebar();
+      return;
+    }
+    // Otherwise, toggle profile menu
     setMobileMenuOpen(!mobileMenuOpen);
   };
 
@@ -17,12 +43,21 @@ const LeftPanel = () => {
       <div className="left-panel">
         <div className="profile-section">
           <div 
-            className="profile-image" 
-            onClick={toggleMobileMenu}
+            ref={portraitRef}
+            className={`profile-image ${sidebarOpen ? 'sidebar-open' : ''}`}
+            onClick={handlePortraitClick}
             role="button"
             tabIndex={0}
-            onKeyPress={(e) => e.key === 'Enter' && toggleMobileMenu()}
-            aria-label="Open profile menu"
+            onKeyPress={(e) => {
+              if (e.key === 'Enter') {
+                if (sidebarOpen && onCloseSidebar) {
+                  onCloseSidebar();
+                } else {
+                  handlePortraitClick();
+                }
+              }
+            }}
+            aria-label={sidebarOpen ? "Close sidebar" : "Open profile menu"}
           >
             <img src="/Adam Portrait.png" alt="Adam" />
           </div>

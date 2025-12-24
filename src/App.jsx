@@ -3,6 +3,7 @@ import LeftPanel from './components/LeftPanel/LeftPanel';
 import RightPanel from './components/RightPanel/RightPanel';
 import Landmark from './components/Map/Landmark';
 import Modal from './components/Modal/Modal';
+import useMapStore from './store/useMapStore';
 import { landmarks } from './data/projects';
 import './App.css';
 
@@ -19,6 +20,8 @@ function App() {
   const mapRef = useRef(null);
   const mapContentRef = useRef(null);
   const mapImageRef = useRef(null);
+  const landmarksContainerRef = useRef(null);
+  const isModalOpen = useMapStore((state) => state.isModalOpen);
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
   const closeMenu = () => setMenuOpen(false);
@@ -28,9 +31,16 @@ function App() {
 
   // Calculate scale factor based on rendered map size vs design size
   const updateScale = () => {
-    if (mapImageRef.current) {
+    if (mapImageRef.current && landmarksContainerRef.current) {
       const renderedHeight = mapImageRef.current.offsetHeight;
+      const renderedWidth = mapImageRef.current.offsetWidth;
       setScale(renderedHeight / DESIGN_HEIGHT);
+      
+      // Ensure landmarks container matches image dimensions exactly
+      if (landmarksContainerRef.current && renderedWidth > 0 && renderedHeight > 0) {
+        landmarksContainerRef.current.style.width = `${renderedWidth}px`;
+        landmarksContainerRef.current.style.height = `${renderedHeight}px`;
+      }
     }
   };
 
@@ -136,7 +146,7 @@ function App() {
               draggable={false}
               onLoad={handleImageLoad}
             />
-            <div className="landmarks-container">
+            <div ref={landmarksContainerRef} className="landmarks-container">
               {landmarks.map((landmark) => (
                 <Landmark key={landmark.id} landmark={landmark} scale={scale} />
               ))}
@@ -145,12 +155,17 @@ function App() {
         </div>
       </div>
       
-      <LeftPanel />
+      <LeftPanel sidebarOpen={menuOpen} onCloseSidebar={closeMenu} />
       <RightPanel isOpen={menuOpen} onClose={closeMenu} />
       <Modal />
       
       {/* Mobile menu button (shooting star) */}
-      <button className={`mobile-menu-btn ${menuOpen ? 'hidden' : ''}`} onClick={toggleMenu} aria-label="Toggle menu">
+      <button 
+        className={`mobile-menu-btn ${menuOpen ? 'hidden' : ''} ${isModalOpen ? 'modal-open' : ''}`} 
+        onClick={toggleMenu} 
+        aria-label="Toggle menu"
+        disabled={isModalOpen}
+      >
         <img src="/Shooting Start.png" alt="Menu" />
       </button>
       

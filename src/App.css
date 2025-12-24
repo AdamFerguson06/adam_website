@@ -49,13 +49,21 @@
   width: 100%;
   height: 100%;
   pointer-events: none;
+  /* Ensure container can extend beyond viewport for mobile clicks */
+  min-width: 100%;
+  min-height: 100%;
 }
 
 /* Mobile touch dragging */
 @media (max-width: 768px) {
+  .app {
+    overflow: visible;
+  }
+  
   .map-container {
     touch-action: none;
     cursor: grab;
+    overflow: visible;
   }
   
   .map-container.dragging {
@@ -65,10 +73,19 @@
   .map-content {
     transition: none;
     will-change: transform;
+    overflow: visible;
+  }
+  
+  .map-image-wrapper {
+    overflow: visible;
   }
   
   .map-image {
     transition: none;
+  }
+  
+  .landmarks-container {
+    overflow: visible;
   }
 }
 
@@ -82,13 +99,21 @@
   background: var(--white);
   border: 2.5px solid var(--text-dark);
   border-radius: 50%;
-  z-index: 1000;
+  z-index: 999;
   cursor: pointer;
   transition: transform 0.2s ease, opacity 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .mobile-menu-btn:hover {
   transform: scale(1.1);
+}
+
+.mobile-menu-btn:active {
+  transform: scale(1);
 }
 
 .mobile-menu-btn img {
@@ -99,6 +124,10 @@
 
 .mobile-menu-btn.hidden {
   opacity: 0;
+  pointer-events: none;
+}
+
+.mobile-menu-btn.modal-open {
   pointer-events: none;
 }
 

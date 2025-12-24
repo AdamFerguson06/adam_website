@@ -11,6 +11,21 @@ const Landmark = ({ landmark, scale = 1 }) => {
     openModal(landmark);
   };
 
+  // Check if device supports hover (desktop)
+  const isMobile = () => window.innerWidth <= 768;
+
+  const handleMouseEnter = () => {
+    if (!isMobile()) {
+      setIsHovered(true);
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (!isMobile()) {
+      setIsHovered(false);
+    }
+  };
+
   // Scale the position and dimensions based on the rendered map size
   const scaledStyle = {
     left: `${landmark.left * scale}px`,
@@ -23,8 +38,8 @@ const Landmark = ({ landmark, scale = 1 }) => {
     <button
       className={`landmark ${isHovered ? 'hovered' : ''}`}
       style={scaledStyle}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
       onClick={handleClick}
       aria-label={`View ${landmark.title}`}
     >
