@@ -128,6 +128,13 @@
   .profile-image.sidebar-open:active {
     opacity: 0.4;
   }
+
+  .profile-image.no-hover,
+  .profile-image.no-hover:hover,
+  .profile-image.no-hover:active {
+    opacity: 1 !important;
+    transition: none !important;
+  }
   
   .name-and-links {
     display: none;

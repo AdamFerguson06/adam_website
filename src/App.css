@@ -128,7 +128,24 @@
 }
 
 .mobile-menu-btn.modal-open {
-  pointer-events: none;
+  z-index: 100;
+  cursor: pointer;
+}
+
+.mobile-menu-btn.modal-open:hover {
+  transform: none;
+}
+
+.mobile-menu-btn.modal-open:active {
+  transform: none;
+}
+
+.mobile-menu-btn.no-hover,
+.mobile-menu-btn.no-hover:hover,
+.mobile-menu-btn.no-hover:active {
+  transform: none !important;
+  opacity: 1 !important;
+  transition: none !important;
 }
 
 /* Mobile overlay */

@@ -13,6 +13,8 @@ const DESIGN_HEIGHT = 1019;
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [portraitModalOpen, setPortraitModalOpen] = useState(false);
+  const [starNoHover, setStarNoHover] = useState(false);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
   const [scale, setScale] = useState(1);
@@ -21,10 +23,14 @@ function App() {
   const mapContentRef = useRef(null);
   const mapImageRef = useRef(null);
   const landmarksContainerRef = useRef(null);
+  const justClosedModalRef = useRef(false);
   const isModalOpen = useMapStore((state) => state.isModalOpen);
+  const closeModal = useMapStore((state) => state.closeModal);
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
   const closeMenu = () => setMenuOpen(false);
+  
+  const closePortraitModal = () => setPortraitModalOpen(false);
 
   // Check if we're on mobile
   const isMobile = () => window.innerWidth <= 768;
@@ -155,16 +161,91 @@ function App() {
         </div>
       </div>
       
-      <LeftPanel sidebarOpen={menuOpen} onCloseSidebar={closeMenu} />
+      <LeftPanel 
+        sidebarOpen={menuOpen} 
+        onCloseSidebar={closeMenu}
+        portraitModalOpen={portraitModalOpen}
+        setPortraitModalOpen={setPortraitModalOpen}
+      />
       <RightPanel isOpen={menuOpen} onClose={closeMenu} />
       <Modal />
       
       {/* Mobile menu button (shooting star) */}
       <button 
-        className={`mobile-menu-btn ${menuOpen ? 'hidden' : ''} ${isModalOpen ? 'modal-open' : ''}`} 
-        onClick={toggleMenu} 
-        aria-label="Toggle menu"
-        disabled={isModalOpen}
+        className={`mobile-menu-btn ${menuOpen ? 'hidden' : ''} ${isModalOpen || portraitModalOpen ? 'modal-open' : ''} ${starNoHover ? 'no-hover' : ''}`} 
+        onTouchStart={(e) => {
+          // Handle touch on mobile - prevent ghost clicks
+          if (isModalOpen || portraitModalOpen) {
+            e.preventDefault();
+          }
+        }}
+        onTouchEnd={(e) => {
+          // Handle touch end on mobile
+          e.preventDefault();
+          
+          if (justClosedModalRef.current) {
+            return;
+          }
+          
+          if (isModalOpen) {
+            justClosedModalRef.current = true;
+            setStarNoHover(true);
+            closeModal();
+            setTimeout(() => {
+              setStarNoHover(false);
+              justClosedModalRef.current = false;
+            }, 400);
+            return;
+          }
+          
+          if (portraitModalOpen) {
+            justClosedModalRef.current = true;
+            setStarNoHover(true);
+            closePortraitModal();
+            setTimeout(() => {
+              setStarNoHover(false);
+              justClosedModalRef.current = false;
+            }, 400);
+            return;
+          }
+          
+          toggleMenu();
+        }}
+        onClick={(e) => {
+          // Handle click for non-touch devices
+          e.preventDefault();
+          e.stopPropagation();
+          
+          // Skip if we just handled a touch event
+          if (justClosedModalRef.current) {
+            return;
+          }
+          
+          if (isModalOpen) {
+            justClosedModalRef.current = true;
+            setStarNoHover(true);
+            closeModal();
+            setTimeout(() => {
+              setStarNoHover(false);
+              justClosedModalRef.current = false;
+            }, 400);
+            return;
+          }
+          
+          if (portraitModalOpen) {
+            justClosedModalRef.current = true;
+            setStarNoHover(true);
+            closePortraitModal();
+            setTimeout(() => {
+              setStarNoHover(false);
+              justClosedModalRef.current = false;
+            }, 400);
+            return;
+          }
+          
+          toggleMenu();
+        }} 
+        aria-label={isModalOpen || portraitModalOpen ? "Close modal" : "Toggle menu"}
       >
         <img src="/Shooting Start.png" alt="Menu" />
       </button>

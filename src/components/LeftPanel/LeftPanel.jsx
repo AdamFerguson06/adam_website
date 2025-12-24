@@ -1,10 +1,11 @@
-import { useState, useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import './LeftPanel.css';
 
-const LeftPanel = ({ sidebarOpen = false, onCloseSidebar }) => {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+const LeftPanel = ({ sidebarOpen = false, onCloseSidebar, portraitModalOpen, setPortraitModalOpen }) => {
   const portraitRef = useRef(null);
   const prevSidebarOpenRef = useRef(sidebarOpen);
+  const justClosedSidebarRef = useRef(false);
+  const [portraitNoHover, setPortraitNoHover] = useState(false);
 
   useEffect(() => {
     // When sidebar closes, force reset the opacity to clear any lingering :active state
@@ -24,18 +25,55 @@ const LeftPanel = ({ sidebarOpen = false, onCloseSidebar }) => {
     prevSidebarOpenRef.current = sidebarOpen;
   }, [sidebarOpen]);
 
-  const handlePortraitClick = () => {
-    // If sidebar is open, close it
-    if (sidebarOpen && onCloseSidebar) {
-      onCloseSidebar();
+  const handlePortraitTouchEnd = (e) => {
+    e.preventDefault();
+    
+    if (justClosedSidebarRef.current) {
       return;
     }
+    
+    // If sidebar is open, close it
+    if (sidebarOpen && onCloseSidebar) {
+      justClosedSidebarRef.current = true;
+      setPortraitNoHover(true);
+      onCloseSidebar();
+      setTimeout(() => {
+        setPortraitNoHover(false);
+        justClosedSidebarRef.current = false;
+      }, 400);
+      return;
+    }
+    
     // Otherwise, toggle profile menu
-    setMobileMenuOpen(!mobileMenuOpen);
+    setPortraitModalOpen(!portraitModalOpen);
+  };
+
+  const handlePortraitClick = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    if (justClosedSidebarRef.current) {
+      return;
+    }
+    
+    // If sidebar is open, close it
+    if (sidebarOpen && onCloseSidebar) {
+      justClosedSidebarRef.current = true;
+      setPortraitNoHover(true);
+      onCloseSidebar();
+      setTimeout(() => {
+        setPortraitNoHover(false);
+        justClosedSidebarRef.current = false;
+      }, 400);
+      return;
+    }
+    
+    // Otherwise, toggle profile menu
+    setPortraitModalOpen(!portraitModalOpen);
   };
 
   const closeMobileMenu = () => {
-    setMobileMenuOpen(false);
+    setPortraitModalOpen(false);
   };
 
   return (
@@ -44,17 +82,19 @@ const LeftPanel = ({ sidebarOpen = false, onCloseSidebar }) => {
         <div className="profile-section">
           <div 
             ref={portraitRef}
-            className={`profile-image ${sidebarOpen ? 'sidebar-open' : ''}`}
+            className={`profile-image ${sidebarOpen ? 'sidebar-open' : ''} ${portraitNoHover ? 'no-hover' : ''}`}
+            onTouchStart={(e) => {
+              if (sidebarOpen) {
+                e.preventDefault();
+              }
+            }}
+            onTouchEnd={handlePortraitTouchEnd}
             onClick={handlePortraitClick}
             role="button"
             tabIndex={0}
             onKeyPress={(e) => {
               if (e.key === 'Enter') {
-                if (sidebarOpen && onCloseSidebar) {
-                  onCloseSidebar();
-                } else {
-                  handlePortraitClick();
-                }
+                handlePortraitClick(e);
               }
             }}
             aria-label={sidebarOpen ? "Close sidebar" : "Open profile menu"}
@@ -83,7 +123,7 @@ const LeftPanel = ({ sidebarOpen = false, onCloseSidebar }) => {
       </div>
 
       {/* Mobile menu modal */}
-      {mobileMenuOpen && (
+      {portraitModalOpen && (
         <>
           <div className="mobile-profile-overlay" onClick={closeMobileMenu}></div>
           <div className="mobile-profile-menu">
