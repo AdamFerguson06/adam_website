@@ -131,25 +131,25 @@
 
 .mobile-menu-btn.modal-open {
   z-index: 1001;
-  opacity: 0.5;
+  filter: brightness(0.5);
   cursor: pointer;
 }
 
 .mobile-menu-btn.modal-open:hover {
   transform: none;
-  opacity: 0.5;
+  filter: brightness(0.5);
 }
 
 .mobile-menu-btn.modal-open:active {
   transform: none;
-  opacity: 0.5;
+  filter: brightness(0.5);
 }
 
 .mobile-menu-btn.no-hover,
 .mobile-menu-btn.no-hover:hover,
 .mobile-menu-btn.no-hover:active {
   transform: none !important;
-  opacity: 1 !important;
+  filter: none !important;
   transition: none !important;
 }
 
@@ -167,14 +167,14 @@
   .mobile-menu-btn.modal-open:hover,
   .mobile-menu-btn.modal-open:active {
     transform: none;
-    opacity: 0.5;
+    filter: brightness(0.5);
   }
   
   .mobile-menu-btn.no-hover,
   .mobile-menu-btn.no-hover:hover,
   .mobile-menu-btn.no-hover:active {
     transform: none !important;
-    opacity: 1 !important;
+    filter: none !important;
   }
 }
 
