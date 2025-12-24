@@ -37,11 +37,50 @@
   transform-origin: center top;
 }
 
+.name-and-links {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
+
 .profile-name {
   font-size: 36px;
   font-weight: 400;
   color: var(--text-dark);
   font-style: italic;
+}
+
+.socials-section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.socials-label {
+  font-size: 24px;
+  font-weight: 400;
+  color: var(--text-dark);
+}
+
+.social-link-item {
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--text-dark);
+}
+
+.social-link {
+  color: var(--text-dark);
+  text-decoration: none;
+  font-size: 20px;
+  font-weight: 400;
+  transition: opacity 0.2s ease;
+}
+
+.social-link:hover {
+  opacity: 0.6;
+  text-decoration: underline;
 }
 
 /* Mobile styles */
@@ -55,10 +94,139 @@
   .profile-image {
     width: 65px;
     height: 65px;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+  }
+
+  .profile-image:hover {
+    opacity: 0.8;
   }
   
-  .profile-name {
+  .name-and-links {
     display: none;
+  }
+
+  /* Mobile profile overlay */
+  .mobile-profile-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+  }
+
+  /* Mobile profile menu */
+  .mobile-profile-menu {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: var(--bg-color);
+    border: 2.5px solid var(--text-dark);
+    border-radius: 12px;
+    padding: 32px;
+    z-index: 1000;
+    max-width: 90%;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Close button */
+  .mobile-profile-close {
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    background: none;
+    border: none;
+    font-size: 36px;
+    color: var(--text-dark);
+    cursor: pointer;
+    padding: 0;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+  }
+
+  /* Mobile profile content */
+  .mobile-profile-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .profile-image-large {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 2.5px solid var(--text-dark);
+    background-color: var(--white);
+    overflow: hidden;
+  }
+
+  .profile-image-large img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    object-position: center top;
+    transform: scale(0.75);
+    transform-origin: center top;
+  }
+
+  .profile-name-mobile {
+    font-size: 36px;
+    font-weight: 400;
+    color: var(--text-dark);
+    font-style: italic;
+  }
+
+  .socials-section-mobile {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    width: 100%;
+  }
+
+  .socials-label-mobile {
+    font-size: 24px;
+    font-weight: 400;
+    color: var(--text-dark);
+  }
+
+  .social-link-item-mobile {
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--text-dark);
+  }
+
+  .social-link-mobile {
+    color: var(--text-dark);
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: 400;
+    transition: opacity 0.2s ease;
+  }
+
+  .social-link-mobile:hover {
+    opacity: 0.6;
+    text-decoration: underline;
+  }
+}
+
+/* Desktop - hide mobile menu elements */
+@media (min-width: 769px) {
+  .mobile-profile-overlay,
+  .mobile-profile-menu {
+    display: none;
+  }
+  
+  .profile-image {
+    cursor: default;
   }
 }
 
