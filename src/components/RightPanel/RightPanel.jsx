@@ -1,12 +1,15 @@
+import useMapStore from '../../store/useMapStore';
 import './RightPanel.css';
 
 const RightPanel = ({ isOpen, onClose }) => {
+  const openModal = useMapStore((state) => state.openModal);
+  
   const navItems = [
-    { label: 'About', href: '#about' },
-    { label: 'Projects', href: '#projects' },
-    { label: 'Contact', href: '#contact' },
-    { label: 'Misc.', href: '#misc' },
-    { label: 'xG', href: '#xg' },
+    { label: 'About', navTarget: 'about' },
+    { label: 'Projects', navTarget: 'projects' },
+    { label: 'Contact', navTarget: 'contact' },
+    { label: 'Misc.', navTarget: 'misc' },
+    { label: 'xG', navTarget: 'xg' },
   ];
 
   const handleStarClick = (e) => {
@@ -15,6 +18,16 @@ const RightPanel = ({ isOpen, onClose }) => {
       e.preventDefault();
       onClose();
     }
+  };
+
+  const handleNavClick = (e, navTarget) => {
+    e.preventDefault();
+    // Close the mobile menu if open
+    if (isOpen) {
+      onClose();
+    }
+    // Open the modal with the appropriate navTarget
+    openModal({ navTarget });
   };
 
   return (
@@ -27,9 +40,9 @@ const RightPanel = ({ isOpen, onClose }) => {
         {navItems.map((item) => (
           <a 
             key={item.label} 
-            href={item.href} 
+            href={`#${item.navTarget}`} 
             className="nav-link"
-            onClick={onClose}
+            onClick={(e) => handleNavClick(e, item.navTarget)}
           >
             {item.label}
           </a>
