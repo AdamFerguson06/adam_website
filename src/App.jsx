@@ -18,11 +18,9 @@ function App() {
       <LeftPanel />
       <RightPanel isOpen={menuOpen} onClose={closeMenu} />
       
-      {/* Mobile burger button */}
-      <button className="burger-btn" onClick={toggleMenu} aria-label="Toggle menu">
-        <span className={`burger-line ${menuOpen ? 'open' : ''}`}></span>
-        <span className={`burger-line ${menuOpen ? 'open' : ''}`}></span>
-        <span className={`burger-line ${menuOpen ? 'open' : ''}`}></span>
+      {/* Mobile menu button (shooting star) */}
+      <button className={`mobile-menu-btn ${menuOpen ? 'hidden' : ''}`} onClick={toggleMenu} aria-label="Toggle menu">
+        <img src="/Shooting Start.png" alt="Menu" />
       </button>
       
       {/* Mobile overlay */}

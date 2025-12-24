@@ -9,9 +9,17 @@ const RightPanel = ({ isOpen, onClose }) => {
     { label: 'xG', href: '#xg' },
   ];
 
+  const handleStarClick = (e) => {
+    // On mobile, close the menu when star is clicked
+    if (window.innerWidth <= 768 && isOpen) {
+      e.preventDefault();
+      onClose();
+    }
+  };
+
   return (
     <div className={`right-panel ${isOpen ? 'open' : ''}`}>
-      <a href="#star" className="star-icon">
+      <a href="#star" className="star-icon" onClick={handleStarClick}>
         <img src="/Shooting Start.png" alt="Shooting Star" />
       </a>
       

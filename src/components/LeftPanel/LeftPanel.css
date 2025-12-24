@@ -47,13 +47,14 @@
 /* Mobile styles */
 @media (max-width: 768px) {
   .left-panel {
-    width: 80px;
-    padding-top: 20px;
+    width: auto;
+    background-color: transparent;
+    padding: 16px 0 0 16px;
   }
   
   .profile-image {
-    width: 56px;
-    height: 56px;
+    width: 65px;
+    height: 65px;
   }
   
   .profile-name {
