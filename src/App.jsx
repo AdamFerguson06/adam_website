@@ -18,12 +18,14 @@ function App() {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
   const [scale, setScale] = useState(1);
+  const [showScrollHint, setShowScrollHint] = useState(true);
   const dragStart = useRef({ x: 0, y: 0 });
   const mapRef = useRef(null);
   const mapContentRef = useRef(null);
   const mapImageRef = useRef(null);
   const landmarksContainerRef = useRef(null);
   const justClosedModalRef = useRef(false);
+  const hasScrolledRef = useRef(false);
   const isModalOpen = useMapStore((state) => state.isModalOpen);
   const closeModal = useMapStore((state) => state.closeModal);
 
@@ -94,6 +96,12 @@ function App() {
 
   const handleTouchMove = (e) => {
     if (!isDragging || !isMobile()) return;
+    
+    // Hide scroll hint on first scroll
+    if (!hasScrolledRef.current) {
+      hasScrolledRef.current = true;
+      setShowScrollHint(false);
+    }
     
     const touch = e.touches[0];
     const newX = touch.clientX - dragStart.current.x;
@@ -252,6 +260,15 @@ function App() {
       
       {/* Mobile overlay */}
       {menuOpen && <div className="mobile-overlay" onClick={closeMenu}></div>}
+      
+      {/* Mobile scroll hint */}
+      {showScrollHint && (
+        <div className="mobile-scroll-hint">
+          <span className="scroll-hint-arrow">←</span>
+          <span className="scroll-hint-text">Swipe to explore</span>
+          <span className="scroll-hint-arrow">→</span>
+        </div>
+      )}
     </div>
   );
 }
