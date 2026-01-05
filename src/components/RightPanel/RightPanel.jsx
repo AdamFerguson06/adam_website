@@ -9,7 +9,6 @@ const RightPanel = ({ isOpen, onClose }) => {
     { label: 'Projects', navTarget: 'projects' },
     { label: 'Contact', navTarget: 'contact' },
     { label: 'Misc.', navTarget: 'misc' },
-    { label: 'xG', navTarget: 'xg' },
   ];
 
   const handleStarClick = (e) => {

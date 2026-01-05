@@ -119,7 +119,14 @@ const Modal = () => {
             </button>
             
             <div className="modal-content">
-              <span className="modal-label">{content.label}</span>
+              <a 
+                href={activeProject.wikiUrl} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="modal-label"
+              >
+                {activeProject.title}
+              </a>
               <h2 className="modal-title">{content.title}</h2>
               <p className="modal-description">{content.description}</p>
               <a 

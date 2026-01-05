@@ -50,6 +50,7 @@
 }
 
 .profile-name {
+  font-family: var(--font-display);
   font-size: 36px;
   font-weight: 400;
   color: var(--text-dark);
@@ -212,6 +213,7 @@
   }
 
   .profile-name-mobile {
+    font-family: var(--font-display);
     font-size: 36px;
     font-weight: 400;
     color: var(--text-dark);

@@ -2,7 +2,9 @@ export const landmarks = [
   {
     id: 'empire-state',
     title: 'Empire State Building',
+    tooltipLabel: 'About Me',
     navTarget: 'about',
+    wikiUrl: 'https://en.wikipedia.org/wiki/Empire_State_Building',
     image: '/map_images/Empire State Building.png',
     // Position and dimensions from Figma
     left: 630,
@@ -13,7 +15,9 @@ export const landmarks = [
   {
     id: 'one-wtc',
     title: 'One World Trade Center',
+    tooltipLabel: 'Misc.',
     navTarget: 'misc',
+    wikiUrl: 'https://en.wikipedia.org/wiki/One_World_Trade_Center',
     image: '/map_images/One World Trade.png',
     left: 283.11,
     top: 564.94,
@@ -23,7 +27,9 @@ export const landmarks = [
   {
     id: 'statue-liberty',
     title: 'Statue of Liberty',
+    tooltipLabel: 'xG',
     navTarget: 'xg',
+    wikiUrl: 'https://en.wikipedia.org/wiki/Statue_of_Liberty',
     image: '/map_images/Statue of Liberty.png',
     left: 24,
     top: 865,
@@ -33,7 +39,9 @@ export const landmarks = [
   {
     id: 'clock',
     title: 'Grand Central Clock',
+    tooltipLabel: 'My Projects',
     navTarget: 'projects',
+    wikiUrl: 'https://en.wikipedia.org/wiki/Main_Concourse#Information_booth_and_clock',
     image: '/map_images/Grand Central Clock.png',
     left: 870.9,
     top: 266.6,
@@ -43,7 +51,9 @@ export const landmarks = [
   {
     id: 'walker-tower',
     title: 'Walker Tower',
+    tooltipLabel: 'Contact Me',
     navTarget: 'contact',
+    wikiUrl: 'https://streeteasy.com/building/walker-tower',
     image: '/map_images/Walker Tower.png',
     left: 398.63,
     top: 276.76,

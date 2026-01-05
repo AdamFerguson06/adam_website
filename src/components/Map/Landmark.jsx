@@ -50,7 +50,7 @@ const Landmark = ({ landmark, scale = 1 }) => {
         draggable={false}
       />
       <div className="landmark-tooltip">
-        <span className="landmark-tooltip-text">{landmark.title}</span>
+        <span className="landmark-tooltip-text">{landmark.tooltipLabel || landmark.title}</span>
         <div className="landmark-tooltip-arrow" />
       </div>
     </button>

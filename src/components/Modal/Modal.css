@@ -51,13 +51,19 @@
 
 .modal-label {
   display: inline-block;
-  font-family: var(--font-heading);
   font-size: 11px;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 1.5px;
-  color: var(--accent);
+  color: #666;
   margin-bottom: 12px;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.modal-label:hover {
+  color: var(--text-dark);
+  text-decoration: underline;
 }
 
 .modal-title {
