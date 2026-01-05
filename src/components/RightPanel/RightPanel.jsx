@@ -1,4 +1,5 @@
 import useMapStore from '../../store/useMapStore';
+import { landmarks } from '../../data/projects';
 import './RightPanel.css';
 
 const RightPanel = ({ isOpen, onClose }) => {
@@ -28,8 +29,10 @@ const RightPanel = ({ isOpen, onClose }) => {
     if (isOpen) {
       onClose();
     }
-    // Open the modal with the appropriate navTarget
-    openModal({ navTarget });
+    // Find the landmark that corresponds to this navTarget
+    const landmark = landmarks.find(l => l.navTarget === navTarget);
+    // Open the modal with the full landmark data (or fallback to just navTarget)
+    openModal(landmark || { navTarget });
   };
 
   const handleNavMouseEnter = (navTarget) => {
