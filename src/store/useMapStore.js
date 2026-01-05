@@ -16,6 +16,10 @@ const useMapStore = create((set) => ({
   activeProject: null,
   openModal: (project) => set({ isModalOpen: true, activeProject: project }),
   closeModal: () => set({ isModalOpen: false, activeProject: null }),
+  
+  // Hover state for nav-landmark sync (desktop only)
+  hoveredNavTarget: null,
+  setHoveredNavTarget: (navTarget) => set({ hoveredNavTarget: navTarget }),
 }));
 
 export default useMapStore;

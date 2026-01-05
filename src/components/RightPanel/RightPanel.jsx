@@ -3,6 +3,7 @@ import './RightPanel.css';
 
 const RightPanel = ({ isOpen, onClose }) => {
   const openModal = useMapStore((state) => state.openModal);
+  const setHoveredNavTarget = useMapStore((state) => state.setHoveredNavTarget);
   
   const navItems = [
     { label: 'About', navTarget: 'about' },
@@ -11,9 +12,11 @@ const RightPanel = ({ isOpen, onClose }) => {
     { label: 'Misc.', navTarget: 'misc' },
   ];
 
+  const isMobile = () => window.innerWidth <= 768;
+
   const handleStarClick = (e) => {
     // On mobile, close the menu when star is clicked
-    if (window.innerWidth <= 768 && isOpen) {
+    if (isMobile() && isOpen) {
       e.preventDefault();
       onClose();
     }
@@ -29,6 +32,18 @@ const RightPanel = ({ isOpen, onClose }) => {
     openModal({ navTarget });
   };
 
+  const handleNavMouseEnter = (navTarget) => {
+    if (!isMobile()) {
+      setHoveredNavTarget(navTarget);
+    }
+  };
+
+  const handleNavMouseLeave = () => {
+    if (!isMobile()) {
+      setHoveredNavTarget(null);
+    }
+  };
+
   return (
     <div className={`right-panel ${isOpen ? 'open' : ''}`}>
       <a href="#star" className="star-icon" onClick={handleStarClick}>
@@ -42,6 +57,8 @@ const RightPanel = ({ isOpen, onClose }) => {
             href={`#${item.navTarget}`} 
             className="nav-link"
             onClick={(e) => handleNavClick(e, item.navTarget)}
+            onMouseEnter={() => handleNavMouseEnter(item.navTarget)}
+            onMouseLeave={handleNavMouseLeave}
           >
             {item.label}
           </a>

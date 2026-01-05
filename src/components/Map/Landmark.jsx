@@ -4,7 +4,7 @@ import './Landmark.css';
 
 const Landmark = ({ landmark, scale = 1 }) => {
   const [isHovered, setIsHovered] = useState(false);
-  const { openModal } = useMapStore();
+  const { openModal, hoveredNavTarget } = useMapStore();
 
   const handleClick = (e) => {
     e.stopPropagation();
@@ -34,9 +34,12 @@ const Landmark = ({ landmark, scale = 1 }) => {
     height: `${landmark.height * scale}px`,
   };
 
+  // Highlight if directly hovered OR if nav item with matching navTarget is hovered
+  const isHighlighted = isHovered || (hoveredNavTarget && hoveredNavTarget === landmark.navTarget);
+
   return (
     <button
-      className={`landmark ${isHovered ? 'hovered' : ''}`}
+      className={`landmark ${isHighlighted ? 'hovered' : ''}`}
       style={scaledStyle}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
