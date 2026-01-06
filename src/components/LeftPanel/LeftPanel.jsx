@@ -99,12 +99,12 @@ const LeftPanel = ({ sidebarOpen = false, onCloseSidebar, portraitModalOpen, set
             }}
             aria-label={sidebarOpen ? "Close sidebar" : "Open profile menu"}
           >
-            <img src="/Adam Portrait.png" alt="Adam" />
+            <img src="/Ghibli Adam PFP.png" alt="Adam" />
           </div>
           <div className="name-and-links">
             <span className="profile-name">Adam</span>
             <div className="socials-section">
-              <span className="socials-label">Socials:</span>
+              <span className="socials-label">Socials</span>
               <div className="social-link-item">
                 <span>- </span>
                 <a 
@@ -136,7 +136,7 @@ const LeftPanel = ({ sidebarOpen = false, onCloseSidebar, portraitModalOpen, set
             </button>
             <div className="mobile-profile-content">
               <div className="profile-image-large">
-                <img src="/Adam Portrait.png" alt="Adam" />
+                <img src="/Ghibli Adam PFP.png" alt="Adam" />
               </div>
               <span className="profile-name-mobile">Adam</span>
               <div className="socials-section-mobile">

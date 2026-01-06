@@ -35,11 +35,9 @@
 
 .profile-image img {
   width: 100%;
-  height: auto;
+  height: 100%;
   object-fit: contain;
-  object-position: center top;
-  transform: scale(0.75);
-  transform-origin: center top;
+  object-position: center center;
 }
 
 .name-and-links {
@@ -205,11 +203,9 @@
 
   .profile-image-large img {
     width: 100%;
-    height: auto;
+    height: 100%;
     object-fit: contain;
-    object-position: center top;
-    transform: scale(0.75);
-    transform-origin: center top;
+    object-position: center center;
   }
 
   .profile-name-mobile {
