@@ -31,7 +31,7 @@ function App() {
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
   const closeMenu = () => setMenuOpen(false);
-  
+
   const closePortraitModal = () => setPortraitModalOpen(false);
 
   // Check if we're on mobile
@@ -118,14 +118,14 @@ function App() {
   // Update scale on mount and resize
   useEffect(() => {
     updateScale();
-    
+
     const handleResize = () => {
       updateScale();
       if (!isMobile()) {
         setPosition({ x: 0, y: 0 });
       }
     };
-    
+
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
@@ -223,12 +223,12 @@ function App() {
           // Handle click for non-touch devices
           e.preventDefault();
           e.stopPropagation();
-          
+
           // Skip if we just handled a touch event
           if (justClosedModalRef.current) {
             return;
           }
-          
+
           if (isModalOpen) {
             justClosedModalRef.current = true;
             setStarNoHover(true);
@@ -239,7 +239,7 @@ function App() {
             }, 400);
             return;
           }
-          
+
           if (portraitModalOpen) {
             justClosedModalRef.current = true;
             setStarNoHover(true);
@@ -250,7 +250,7 @@ function App() {
             }, 400);
             return;
           }
-          
+
           toggleMenu();
         }} 
         aria-label={isModalOpen || portraitModalOpen ? "Close modal" : "Toggle menu"}

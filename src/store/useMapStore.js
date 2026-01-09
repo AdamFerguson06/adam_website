@@ -20,6 +20,10 @@ const useMapStore = create((set) => ({
   // Hover state for nav-landmark sync (desktop only)
   hoveredNavTarget: null,
   setHoveredNavTarget: (navTarget) => set({ hoveredNavTarget: navTarget }),
+
+  // Highlight all landmarks state (desktop star click)
+  highlightAllLandmarks: false,
+  setHighlightAllLandmarks: (highlight) => set({ highlightAllLandmarks: highlight }),
 }));
 
 export default useMapStore;

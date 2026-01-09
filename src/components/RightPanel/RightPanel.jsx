@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import useMapStore from '../../store/useMapStore';
 import { landmarks } from '../../data/projects';
 import './RightPanel.css';
@@ -5,6 +6,9 @@ import './RightPanel.css';
 const RightPanel = ({ isOpen, onClose }) => {
   const openModal = useMapStore((state) => state.openModal);
   const setHoveredNavTarget = useMapStore((state) => state.setHoveredNavTarget);
+  const highlightAllLandmarks = useMapStore((state) => state.highlightAllLandmarks);
+  const setHighlightAllLandmarks = useMapStore((state) => state.setHighlightAllLandmarks);
+  const highlightTimeoutRef = useRef(null);
   
   const navItems = [
     { label: 'About', navTarget: 'about' },
@@ -16,10 +20,30 @@ const RightPanel = ({ isOpen, onClose }) => {
   const isMobile = () => window.innerWidth <= 768;
 
   const handleStarClick = (e) => {
+    e.preventDefault();
+
     // On mobile, close the menu when star is clicked
     if (isMobile() && isOpen) {
-      e.preventDefault();
       onClose();
+      return;
+    }
+
+    // On desktop, highlight all landmarks for 2 seconds
+    if (!isMobile()) {
+      // Clear any existing timeout
+      if (highlightTimeoutRef.current) {
+        clearTimeout(highlightTimeoutRef.current);
+      }
+
+      // Toggle highlight - if already highlighting, turn off; otherwise turn on for 2 seconds
+      if (highlightAllLandmarks) {
+        setHighlightAllLandmarks(false);
+      } else {
+        setHighlightAllLandmarks(true);
+        highlightTimeoutRef.current = setTimeout(() => {
+          setHighlightAllLandmarks(false);
+        }, 2000);
+      }
     }
   };
 
