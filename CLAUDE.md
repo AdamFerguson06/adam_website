@@ -24,6 +24,7 @@ npm run lint         # Run ESLint
   - Scale/zoom state (range: 0.5x to 3x)
   - Modal state for landmark interactions
   - Hover state for nav-landmark synchronization (desktop only)
+  - Highlight all landmarks state (triggered by desktop star click for 2 seconds)
 
 ### Component Hierarchy
 - **App.jsx**: Main container handling map pan/zoom logic, touch events, and responsive behavior
@@ -31,7 +32,7 @@ npm run lint         # Run ESLint
   - **RightPanel**: Navigation menu (slides in from right on mobile)
   - **Map Container**: Manhattan background image with positioned landmarks
     - **Landmark**: Individual clickable hotspots with Wikipedia links
-  - **Modal**: Project/location details overlay
+  - **Modal**: Section content overlay with expandable descriptions and contact info
 
 ### Key Implementation Details
 
@@ -42,7 +43,7 @@ npm run lint         # Run ESLint
 
 **Mobile vs Desktop Behavior**:
 - Mobile (≤768px): Touch-to-pan map, shooting star menu button, swipe gestures
-- Desktop: Static map, hover effects on landmarks, nav-landmark synchronization
+- Desktop: Static map, hover effects on landmarks, nav-landmark synchronization, star click highlights all landmarks for 2 seconds
 
 **Touch Event Handling**:
 - Custom touch handlers prevent dragging when interacting with landmarks
@@ -64,6 +65,11 @@ Deployed on Netlify with SPA redirects configured in `netlify.toml`. Build comma
 Landmarks are defined in `src/data/projects.js` with:
 - Position coordinates (left, top) from Figma design
 - Dimensions (width, height) for click areas
-- Navigation targets linking to LeftPanel sections
+- Navigation targets linking to modal sections
 - Wikipedia URLs for additional information
 - Tooltip labels displayed on hover
+
+Modal section content is defined in `src/components/Modal/Modal.jsx` in the `sectionContent` object:
+- Each section (about, projects, contact, misc, xg) has title, description, and link configuration
+- About section includes expandable `longDescription` and "See My Work" navigation
+- Contact section includes `contactInfo` object with email addresses and calendar link
