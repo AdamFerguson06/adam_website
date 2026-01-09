@@ -17,8 +17,10 @@
 .modal {
   background-color: var(--white);
   border-radius: 20px;
-  max-width: 480px;
+  max-width: 580px;
   width: 100%;
+  max-height: 85vh;
+  overflow-y: auto;
   position: relative;
   box-shadow: 0 25px 80px rgba(0, 0, 0, 0.25), 0 10px 30px rgba(0, 0, 0, 0.15);
 }
@@ -78,7 +80,97 @@
   font-size: 17px;
   line-height: 1.7;
   color: #555;
-  margin-bottom: 32px;
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+
+.modal-expand-section {
+  margin-bottom: 24px;
+}
+
+.modal-expand-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.modal-expand-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  padding: 8px 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-dark);
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.modal-expand-toggle:hover {
+  color: var(--accent);
+}
+
+.modal-expand-toggle .expand-icon {
+  transition: transform 0.3s ease;
+}
+
+.modal-expand-toggle.expanded .expand-icon {
+  transform: rotate(180deg);
+}
+
+.modal-expand-divider {
+  color: #ccc;
+  font-weight: 300;
+}
+
+.modal-nav-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  padding: 8px 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-dark);
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.modal-nav-link:hover {
+  color: var(--accent);
+}
+
+.modal-nav-link svg {
+  transition: transform 0.2s ease;
+}
+
+.modal-nav-link:hover svg {
+  transform: translate(2px, -2px);
+}
+
+.modal-long-description {
+  overflow: hidden;
+}
+
+.modal-long-description-inner {
+  padding-top: 16px;
+  border-top: 1px solid #eee;
+  margin-top: 8px;
+}
+
+.modal-long-description-inner p {
+  font-size: 17px;
+  line-height: 1.7;
+  color: #555;
+  font-weight: 500;
+  margin-bottom: 16px;
+}
+
+.modal-long-description-inner p:last-child {
+  margin-bottom: 0;
 }
 
 .modal-link {
@@ -113,13 +205,25 @@
   .modal-content {
     padding: 40px 28px;
   }
-  
+
   .modal-title {
     font-size: 26px;
   }
-  
+
   .modal-description {
     font-size: 15px;
+  }
+
+  .modal-long-description-inner p {
+    font-size: 15px;
+  }
+
+  .modal-expand-toggle {
+    font-size: 13px;
+  }
+
+  .modal-nav-link {
+    font-size: 13px;
   }
 }
 

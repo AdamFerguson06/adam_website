@@ -1,6 +1,7 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import useMapStore from '../../store/useMapStore';
+import { landmarks } from '../../data/projects';
 import './Modal.css';
 
 // Section content based on navTarget
@@ -8,9 +9,18 @@ const sectionContent = {
   about: {
     label: 'About',
     title: 'About Me',
-    description: 'Welcome! I\'m Adam, a passionate developer and designer based in New York City. I love creating beautiful, functional digital experiences that make a difference.',
-    linkText: 'Learn More',
-    linkHref: '#about',
+    description: 'I\'m a full-stack analytics leader turned entrepreneur, currently running Falcon Media, a digital marketing agency I co-founded. I\'ve built data warehouses from scratch at multiple startups, led initiatives from $0 to $20k in daily profit, and now handle everything from sales to SEM as a founder. I thrive when the work requires wearing many hats.',
+    longDescription: `I started my career at EverQuote as a Quantitative Analyst, where I spent 2.5 years growing into a Senior Quantitative Analyst. I led data analytics for a new business unit that grew to 30% of the company's total revenue within a year.
+
+From there, I moved through a series of progressively senior analytics roles: building star schema and data vault models at Koalafi, establishing the original data warehouse architecture at Unstoppable Domains, and engineering the analytics infrastructure at O Positiv, where I developed LTV prediction models that improved forecast precision by 75%.
+
+In late 2024, I returned to EverQuote as a consultant to lead data engineering, analytics, and product management for a new initiative. I built the data architecture from scratch, set up all data reporting, developed SEM campaigns, and helped grow the initiative from $0 to $20k in daily profit.
+
+That experience pushed me to build something of my own. In 2025, I co-founded Falcon Media, a full-stack digital marketing agency. As Co-Founder, I handle: legal, contracts, sales, account management, finances, landing pages, SEM, and analytics.
+
+What defines me is a willingness to do whatever a project requires, even when it's outside my "scope." I've leaned into AI tools to accelerate this approach, using them to quickly get up to speed on unfamiliar domains. If something needs to get done, I figure it out.`,
+    linkText: 'LinkedIn',
+    linkHref: 'https://www.linkedin.com/in/adam-g-ferguson/',
   },
   projects: {
     label: 'Projects',
@@ -43,7 +53,18 @@ const sectionContent = {
 };
 
 const Modal = () => {
-  const { isModalOpen, activeProject, closeModal } = useMapStore();
+  const { isModalOpen, activeProject, closeModal, openModal } = useMapStore();
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  // Get the projects landmark for navigation
+  const projectsLandmark = landmarks.find(l => l.navTarget === 'projects');
+
+  const handleNavigateToProjects = () => {
+    if (projectsLandmark) {
+      openModal(projectsLandmark);
+      setIsExpanded(false);
+    }
+  };
 
   useEffect(() => {
     const handleEscape = (e) => {
@@ -62,6 +83,13 @@ const Modal = () => {
       document.body.style.overflow = '';
     };
   }, [isModalOpen, closeModal]);
+
+  // Reset expanded state when modal closes
+  useEffect(() => {
+    if (!isModalOpen) {
+      setIsExpanded(false);
+    }
+  }, [isModalOpen]);
 
   const handleOverlayClick = (e) => {
     if (e.target === e.currentTarget) {
@@ -119,9 +147,9 @@ const Modal = () => {
             </button>
             
             <div className="modal-content">
-              <a 
-                href={activeProject.wikiUrl} 
-                target="_blank" 
+              <a
+                href={activeProject.wikiUrl}
+                target="_blank"
                 rel="noopener noreferrer"
                 className="modal-label"
               >
@@ -129,10 +157,74 @@ const Modal = () => {
               </a>
               <h2 className="modal-title">{content.title}</h2>
               <p className="modal-description">{content.description}</p>
-              <a 
-                href={content.linkHref} 
+              {content.longDescription && (
+                <div className="modal-expand-section">
+                  <div className="modal-expand-row">
+                    <button
+                      className={`modal-expand-toggle ${isExpanded ? 'expanded' : ''}`}
+                      onClick={() => setIsExpanded(!isExpanded)}
+                      aria-expanded={isExpanded}
+                    >
+                      <span>{isExpanded ? 'Show Less' : 'Read More'}</span>
+                      <svg
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="expand-icon"
+                      >
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                      </svg>
+                    </button>
+                    <span className="modal-expand-divider">|</span>
+                    <button
+                      className="modal-nav-link"
+                      onClick={handleNavigateToProjects}
+                    >
+                      <span>See My Work</span>
+                      <svg
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <line x1="7" y1="17" x2="17" y2="7"></line>
+                        <polyline points="7 7 17 7 17 17"></polyline>
+                      </svg>
+                    </button>
+                  </div>
+                  <AnimatePresence>
+                    {isExpanded && (
+                      <motion.div
+                        className="modal-long-description"
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.3, ease: 'easeInOut' }}
+                      >
+                        <div className="modal-long-description-inner">
+                          {content.longDescription.split('\n\n').map((paragraph, index) => (
+                            <p key={index}>{paragraph}</p>
+                          ))}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              )}
+              <a
+                href={content.linkHref}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="modal-link"
-                onClick={closeModal}
               >
                 {content.linkText}
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
