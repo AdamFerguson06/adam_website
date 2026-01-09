@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import useMapStore from '../../store/useMapStore';
 import { landmarks } from '../../data/projects';
@@ -25,9 +25,50 @@ What defines me is a willingness to do whatever a project requires, even when it
   projects: {
     label: 'Projects',
     title: 'My Projects',
-    description: 'Explore my portfolio of work spanning web development, design, and creative technology. Each project represents a unique challenge and creative solution.',
-    linkText: 'View All Projects',
-    linkHref: '#projects',
+    description: 'Selected work across data engineering, web development, and growth marketing.',
+    companies: [
+      {
+        name: 'Falcon Media',
+        role: 'Co-Founder',
+        period: '2025 - Present',
+        projects: [
+          {
+            title: 'Lead Gen Website Portfolio',
+            description: 'Five live websites generating leads across insurance, loans, and banking. React frontends, Netlify hosting, full FTC compliance.',
+            skills: ['React', 'AI-Assisted Development', 'Web Development', 'Compliance'],
+            links: [
+              { label: 'quotefii.com', url: 'https://quotefii.com' },
+              { label: 'loanmatchpartners.com', url: 'https://loanmatchpartners.com' },
+              { label: 'loancomparisongroup.com', url: 'https://loancomparisongroup.com' },
+              { label: 'brightpointpartners.com', url: 'https://brightpointpartners.com' },
+              { label: 'checking.brightpointpartners.com', url: 'https://checking.brightpointpartners.com' },
+            ],
+          },
+          {
+            title: 'Data Pipeline & Warehouse',
+            description: 'End-to-end data infrastructure powering all reporting and attribution. AWS Lambda event tracking, PostgreSQL storage, reverse ETL to Google Ads.',
+            skills: ['Python', 'SQL', 'AWS Lambda', 'ETL/ELT', 'Data Warehousing'],
+          },
+          {
+            title: 'Automated P&L Reporting',
+            description: 'Daily profit reports delivered to Slack each morning with charts and brand-level breakdowns. Zero manual work required.',
+            skills: ['Python', 'SQL', 'Data Visualization', 'Automation', 'Slack API'],
+          },
+          {
+            title: 'Google Ads Campaigns',
+            description: 'Five-figure monthly budgets across auto insurance, personal loans, and healthcare. Certified for pharmaceutical advertising.',
+            skills: ['Google Ads', 'SEM', 'Campaign Optimization', 'Analytics'],
+          },
+          {
+            title: 'Partnership & Sales',
+            description: '5+ revenue-share partnerships sourced through cold outreach. All contract negotiations handled directly.',
+            skills: ['Business Development', 'Sales', 'Contract Negotiation'],
+          },
+        ],
+      },
+    ],
+    linkText: 'LinkedIn',
+    linkHref: 'https://www.linkedin.com/in/adam-g-ferguson/',
   },
   contact: {
     label: 'Contact',
@@ -60,6 +101,122 @@ What defines me is a willingness to do whatever a project requires, even when it
 const Modal = () => {
   const { isModalOpen, activeProject, closeModal, openModal } = useMapStore();
   const [isExpanded, setIsExpanded] = useState(false);
+  const [expandedCompanies, setExpandedCompanies] = useState({});
+  const [expandedProjects, setExpandedProjects] = useState({});
+  const [selectedSkills, setSelectedSkills] = useState([]);
+  const [skillDropdownOpen, setSkillDropdownOpen] = useState(false);
+  const [skillSearchQuery, setSkillSearchQuery] = useState('');
+  const skillDropdownRef = useRef(null);
+
+  // Close skill dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (skillDropdownRef.current && !skillDropdownRef.current.contains(event.target)) {
+        setSkillDropdownOpen(false);
+      }
+    };
+
+    if (skillDropdownOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [skillDropdownOpen]);
+
+  // Extract all unique skills from projects
+  const getAllSkills = (companies) => {
+    if (!companies) return [];
+    const skillSet = new Set();
+    companies.forEach(company => {
+      company.projects.forEach(project => {
+        project.skills?.forEach(skill => skillSet.add(skill));
+      });
+    });
+    return Array.from(skillSet).sort();
+  };
+
+  const toggleSkill = (skill) => {
+    setSelectedSkills(prev =>
+      prev.includes(skill)
+        ? prev.filter(s => s !== skill)
+        : [...prev, skill]
+    );
+  };
+
+  const clearSkillFilter = () => {
+    setSelectedSkills([]);
+  };
+
+  // Check if any companies/projects are expanded
+  const isAnyExpanded = () => {
+    return Object.values(expandedCompanies).some(Boolean) ||
+           Object.values(expandedProjects).some(Boolean);
+  };
+
+  // Expand or collapse all
+  const toggleExpandAll = (companies) => {
+    if (!companies) return;
+
+    const shouldExpand = !isAnyExpanded();
+
+    if (shouldExpand) {
+      const newExpandedCompanies = {};
+      const newExpandedProjects = {};
+      companies.forEach(company => {
+        newExpandedCompanies[company.name] = true;
+        company.projects.forEach((_, idx) => {
+          newExpandedProjects[`${company.name}-${idx}`] = true;
+        });
+      });
+      setExpandedCompanies(newExpandedCompanies);
+      setExpandedProjects(newExpandedProjects);
+    } else {
+      setExpandedCompanies({});
+      setExpandedProjects({});
+    }
+  };
+
+  // Auto-expand companies and projects that match selected skills
+  useEffect(() => {
+    if (selectedSkills.length === 0) return;
+
+    const content = sectionContent.projects;
+    if (!content?.companies) return;
+
+    const newExpandedCompanies = {};
+    const newExpandedProjects = {};
+
+    content.companies.forEach(company => {
+      company.projects.forEach((project, idx) => {
+        const hasMatchingSkill = project.skills?.some(skill =>
+          selectedSkills.includes(skill)
+        );
+        if (hasMatchingSkill) {
+          newExpandedCompanies[company.name] = true;
+          newExpandedProjects[`${company.name}-${idx}`] = true;
+        }
+      });
+    });
+
+    setExpandedCompanies(prev => ({ ...prev, ...newExpandedCompanies }));
+    setExpandedProjects(prev => ({ ...prev, ...newExpandedProjects }));
+  }, [selectedSkills]);
+
+  const toggleCompany = (companyName) => {
+    setExpandedCompanies(prev => ({
+      ...prev,
+      [companyName]: !prev[companyName]
+    }));
+  };
+
+  const toggleProject = (projectKey) => {
+    setExpandedProjects(prev => ({
+      ...prev,
+      [projectKey]: !prev[projectKey]
+    }));
+  };
 
   // Get the projects landmark for navigation
   const projectsLandmark = landmarks.find(l => l.navTarget === 'projects');
@@ -93,6 +250,11 @@ const Modal = () => {
   useEffect(() => {
     if (!isModalOpen) {
       setIsExpanded(false);
+      setExpandedCompanies({});
+      setExpandedProjects({});
+      setSelectedSkills([]);
+      setSkillDropdownOpen(false);
+      setSkillSearchQuery('');
     }
   }, [isModalOpen]);
 
@@ -160,8 +322,200 @@ const Modal = () => {
               >
                 {activeProject.title}
               </a>
-              <h2 className="modal-title">{content.title}</h2>
+              {content.companies ? (
+                <div className="modal-title-row">
+                  <h2 className="modal-title">{content.title}</h2>
+                  <div className="skill-filter">
+                    <div className="skill-filter-dropdown" ref={skillDropdownRef}>
+                      <button
+                        className={`skill-filter-toggle ${skillDropdownOpen ? 'open' : ''}`}
+                        onClick={() => setSkillDropdownOpen(!skillDropdownOpen)}
+                      >
+                        <span>
+                          {selectedSkills.length === 0
+                            ? 'Filter by skill'
+                            : `${selectedSkills.length} skill${selectedSkills.length > 1 ? 's' : ''} selected`}
+                        </span>
+                        <svg
+                          width="14"
+                          height="14"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          className="dropdown-icon"
+                        >
+                          <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                      </button>
+                      <AnimatePresence>
+                        {skillDropdownOpen && (
+                          <motion.div
+                            className="skill-filter-menu"
+                            initial={{ opacity: 0, y: -8 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -8 }}
+                            transition={{ duration: 0.15 }}
+                          >
+                            <div className="skill-search-wrapper">
+                              <input
+                                type="text"
+                                className="skill-search-input"
+                                placeholder="Search skills..."
+                                value={skillSearchQuery}
+                                onChange={(e) => setSkillSearchQuery(e.target.value)}
+                                onClick={(e) => e.stopPropagation()}
+                              />
+                            </div>
+                            <div className="skill-options-list">
+                              {getAllSkills(content.companies)
+                                .filter(skill => skill.toLowerCase().includes(skillSearchQuery.toLowerCase()))
+                                .map(skill => (
+                                  <label key={skill} className="skill-filter-option">
+                                    <input
+                                      type="checkbox"
+                                      checked={selectedSkills.includes(skill)}
+                                      onChange={() => toggleSkill(skill)}
+                                    />
+                                    <span className="skill-checkbox"></span>
+                                    <span className="skill-label">{skill}</span>
+                                  </label>
+                                ))}
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                    {selectedSkills.length > 0 && (
+                      <button className="skill-filter-clear" onClick={clearSkillFilter}>
+                        Clear
+                      </button>
+                    )}
+                    <button
+                      className="expand-collapse-all"
+                      onClick={() => toggleExpandAll(content.companies)}
+                    >
+                      {isAnyExpanded() ? 'Collapse All' : 'Expand All'}
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <h2 className="modal-title">{content.title}</h2>
+              )}
               <p className="modal-description">{content.description}</p>
+              {content.companies && (
+                <div className="modal-companies">
+                  {content.companies.map((company) => (
+                    <div key={company.name} className="company-section">
+                      <button
+                        className={`company-header ${expandedCompanies[company.name] ? 'expanded' : ''}`}
+                        onClick={() => toggleCompany(company.name)}
+                        aria-expanded={expandedCompanies[company.name]}
+                      >
+                        <div className="company-info">
+                          <span className="company-name">{company.name}</span>
+                          <span className="company-meta">{company.role} · {company.period}</span>
+                        </div>
+                        <svg
+                          width="16"
+                          height="16"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          className="expand-icon"
+                        >
+                          <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                      </button>
+                      <AnimatePresence>
+                        {expandedCompanies[company.name] && (
+                          <motion.div
+                            className="company-projects"
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: 'auto', opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.3, ease: 'easeInOut' }}
+                          >
+                            <div className="company-projects-inner">
+                              {company.projects.map((project, idx) => {
+                                const projectKey = `${company.name}-${idx}`;
+                                return (
+                                  <div key={projectKey} className="project-item">
+                                    <button
+                                      className={`project-header ${expandedProjects[projectKey] ? 'expanded' : ''}`}
+                                      onClick={() => toggleProject(projectKey)}
+                                      aria-expanded={expandedProjects[projectKey]}
+                                    >
+                                      <span className="project-title">{project.title}</span>
+                                      <svg
+                                        width="14"
+                                        height="14"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        strokeWidth="2"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        className="expand-icon"
+                                      >
+                                        <polyline points="6 9 12 15 18 9"></polyline>
+                                      </svg>
+                                    </button>
+                                    <AnimatePresence>
+                                      {expandedProjects[projectKey] && (
+                                        <motion.div
+                                          className="project-details"
+                                          initial={{ height: 0, opacity: 0 }}
+                                          animate={{ height: 'auto', opacity: 1 }}
+                                          exit={{ height: 0, opacity: 0 }}
+                                          transition={{ duration: 0.2, ease: 'easeInOut' }}
+                                        >
+                                          <div className="project-details-inner">
+                                            <p className="project-description">{project.description}</p>
+                                            <div className="project-skills">
+                                              {project.skills.map((skill) => (
+                                                <span key={skill} className="skill-tag">{skill}</span>
+                                              ))}
+                                            </div>
+                                            {project.links && (
+                                              <div className="project-links">
+                                                {project.links.map((link) => (
+                                                  <a
+                                                    key={link.url}
+                                                    href={link.url}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="project-link"
+                                                  >
+                                                    {link.label}
+                                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                                      <line x1="7" y1="17" x2="17" y2="7"></line>
+                                                      <polyline points="7 7 17 7 17 17"></polyline>
+                                                    </svg>
+                                                  </a>
+                                                ))}
+                                              </div>
+                                            )}
+                                          </div>
+                                        </motion.div>
+                                      )}
+                                    </AnimatePresence>
+                                  </div>
+                                );
+                              })}
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  ))}
+                </div>
+              )}
               {content.longDescription && (
                 <div className="modal-expand-section">
                   <div className="modal-expand-row">
