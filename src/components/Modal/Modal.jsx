@@ -32,9 +32,14 @@ What defines me is a willingness to do whatever a project requires, even when it
   contact: {
     label: 'Contact',
     title: 'Get in Touch',
-    description: 'Have a project in mind or just want to say hello? I\'d love to hear from you. Let\'s connect and create something amazing together.',
-    linkText: 'Contact Me',
-    linkHref: '#contact',
+    description: 'I\'m always happy to connect. Whether it\'s about a role, a consulting opportunity, or a Falcon Media partnership, feel free to reach out.',
+    contactInfo: {
+      calendar: 'https://calendly.com/adam-falconmedia/30min',
+      businessEmail: 'adam@falconmedia.group',
+      personalEmail: 'adam.ferguson06@gmail.com',
+    },
+    linkText: 'Schedule a Meeting with Me',
+    linkHref: 'https://calendly.com/adam-falconmedia/30min',
   },
   misc: {
     label: 'Misc',
@@ -220,18 +225,58 @@ const Modal = () => {
                   </AnimatePresence>
                 </div>
               )}
-              <a
-                href={content.linkHref}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="modal-link"
-              >
-                {content.linkText}
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <line x1="7" y1="17" x2="17" y2="7"></line>
-                  <polyline points="7 7 17 7 17 17"></polyline>
-                </svg>
-              </a>
+              {content.contactInfo ? (
+                <div className="modal-contact-section">
+                  <a
+                    href={content.linkHref}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="modal-text-link"
+                  >
+                    <span>{content.linkText}</span>
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <line x1="7" y1="17" x2="17" y2="7"></line>
+                      <polyline points="7 7 17 7 17 17"></polyline>
+                    </svg>
+                  </a>
+                  <div className="modal-contact-info">
+                    <div className="contact-item">
+                      <span className="contact-label">Business:</span>
+                      <a href={`mailto:${content.contactInfo.businessEmail}`} className="contact-link">
+                        {content.contactInfo.businessEmail}
+                      </a>
+                    </div>
+                    <div className="contact-item">
+                      <span className="contact-label">Personal:</span>
+                      <a href={`mailto:${content.contactInfo.personalEmail}`} className="contact-link">
+                        {content.contactInfo.personalEmail}
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <a
+                  href={content.linkHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="modal-link"
+                >
+                  {content.linkText}
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="7" y1="17" x2="17" y2="7"></line>
+                    <polyline points="7 7 17 7 17 17"></polyline>
+                  </svg>
+                </a>
+              )}
             </div>
           </motion.div>
         </motion.div>
