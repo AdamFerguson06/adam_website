@@ -839,6 +839,15 @@
     color: var(--text-dark);
     background: #f0f0f0;
   }
+
+  /* Left-align company info on mobile */
+  .company-info {
+    text-align: left;
+  }
+
+  .company-meta {
+    text-align: left;
+  }
 }
 
 /* Hide mobile-only elements on desktop */
