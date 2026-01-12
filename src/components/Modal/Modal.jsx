@@ -66,9 +66,95 @@ What defines me is a willingness to do whatever a project requires, even when it
           },
         ],
       },
+      {
+        name: 'EverQuote',
+        role: 'Consultant',
+        period: '2024 - 2025',
+        projects: [
+          {
+            title: 'Data Architecture & Reporting',
+            description: 'Built data architecture from scratch for a new initiative. Set up all reporting infrastructure and analytics pipelines.',
+            skills: ['SQL', 'Data Warehousing', 'ETL/ELT', 'Data Analytics'],
+          },
+          {
+            title: 'Growth Initiative',
+            description: 'Led analytics, data engineering, and product management for a new initiative that grew from $0 to $50k in daily profit.',
+            skills: ['SEM', 'Google Ads', 'Analytics', 'Product Management'],
+          },
+        ],
+      },
+      {
+        name: 'O Positiv',
+        role: 'Senior Manager, Data & Analytics',
+        period: '2023 - 2024',
+        projects: [
+          {
+            title: 'Analytics Data Warehouse',
+            description: 'Engineered the original data warehouse using SQL, Fivetran, Airflow, DBT, and Snowflake. Star schema design with LTV prediction models that improved 12/24-month forecast precision by 75%.',
+            skills: ['SQL', 'DBT', 'Snowflake', 'Data Warehousing', 'ETL/ELT'],
+          },
+          {
+            title: 'LTV Prediction Models',
+            description: 'Built models enabling diverse LTV forecast methodologies. Enhanced forecast precision by 75% across 12 and 24-month horizons.',
+            skills: ['Python', 'Data Science', 'Forecasting', 'Analytics'],
+          },
+          {
+            title: 'Marketing Acquisition Dashboards',
+            description: 'Led marketing acquisition engineering efforts. Built primary dashboards establishing CAC and CPA measurements, reducing ad performance analysis by 8 hours per week.',
+            skills: ['Data Visualization', 'SQL', 'Marketing Analytics', 'Business Intelligence'],
+          },
+          {
+            title: 'A/B Testing Framework',
+            description: 'Developed Python scripts for A/B testing using Pandas, NumPy, and Statsmodels. Reduced analytical time by 4 hours per test.',
+            skills: ['Python', 'A/B Testing', 'Data Science', 'Automation'],
+          },
+        ],
+      },
+      {
+        name: 'Koalafi',
+        role: 'Manager of Sales Analytics',
+        period: '2021 - 2022',
+        projects: [
+          {
+            title: 'Data Warehouse Modeling',
+            description: 'Collaborated with data engineering to build star schema and data vault models using DBT, GitLab, and Snowflake.',
+            skills: ['SQL', 'DBT', 'Snowflake', 'Data Warehousing'],
+          },
+          {
+            title: 'Executive Sales Reporting',
+            description: 'Led weekly sales analytics meetings with C-suite, delivering key metrics that drove sales performance and strategic decision-making.',
+            skills: ['Data Visualization', 'Business Intelligence', 'Analytics'],
+          },
+          {
+            title: 'Automated Reporting Dashboards',
+            description: 'Created Python scripts and Tableau dashboards to automate weekly reporting. Decreased manual reporting by 4 hours per week.',
+            skills: ['Python', 'Tableau', 'Automation', 'Data Visualization'],
+          },
+          {
+            title: 'Revenue Forecasting',
+            description: 'Built 2022 revenue forecast and monthly commission payout models using Snowflake and Excel.',
+            skills: ['SQL', 'Excel', 'Forecasting', 'Financial Modeling'],
+          },
+        ],
+      },
+      {
+        name: 'EverQuote',
+        role: 'Sr. Quantitative Analyst',
+        period: '2018 - 2020',
+        projects: [
+          {
+            title: 'New Business Unit Analytics',
+            description: 'Led data analytics for a brand new business unit that grew to 30% of EverQuote\'s total revenue within 12 months of inception.',
+            skills: ['SQL', 'Data Analytics', 'Business Intelligence'],
+          },
+          {
+            title: 'Multi-Arm Bandit A/B Testing',
+            description: 'Implemented data science model to automate A/B testing. Improved daily profit by 20% and reduced manual test monitoring by 5 hours per week.',
+            skills: ['Python', 'Data Science', 'A/B Testing', 'Automation'],
+          },
+        ],
+      },
     ],
-    linkText: 'LinkedIn',
-    linkHref: 'https://www.linkedin.com/in/adam-g-ferguson/',
   },
   contact: {
     label: 'Contact',
@@ -617,7 +703,7 @@ const Modal = () => {
                     </div>
                   </div>
                 </div>
-              ) : (
+              ) : content.linkHref && (
                 <a
                   href={content.linkHref}
                   target="_blank"
