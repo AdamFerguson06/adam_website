@@ -769,5 +769,86 @@
   .modal-text-link {
     font-size: 13px;
   }
+
+  /* Mobile Projects layout */
+  .modal-title-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .modal-title-row .modal-title {
+    margin-bottom: 0;
+  }
+
+  .modal-title-row .skill-filter {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .modal-title-row .skill-filter-dropdown {
+    flex-grow: 1;
+  }
+
+  .modal-title-row .skill-filter-toggle {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .modal-title-row .skill-filter-menu {
+    left: 0;
+    right: 0;
+    min-width: unset;
+  }
+
+  .modal-title-row .skill-filter-clear {
+    display: none;
+  }
+
+  .modal-title-row .expand-collapse-all {
+    display: none;
+  }
+
+  .mobile-filter-actions {
+    display: flex;
+    width: 100%;
+    gap: 12px;
+    margin-top: 8px;
+  }
+
+  .mobile-filter-actions .expand-collapse-all,
+  .mobile-filter-actions .skill-filter-clear {
+    display: inline-block;
+    font-size: 13px;
+  }
+
+  .skill-filter-menu-clear {
+    display: block;
+    padding: 10px 14px;
+    border-top: 1px solid #eee;
+    background: #fafafa;
+    font-size: 13px;
+    font-weight: 500;
+    color: #888;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.2s ease;
+  }
+
+  .skill-filter-menu-clear:hover {
+    color: var(--text-dark);
+    background: #f0f0f0;
+  }
+}
+
+/* Hide mobile-only elements on desktop */
+@media (min-width: 541px) {
+  .mobile-filter-actions {
+    display: none;
+  }
+
+  .skill-filter-menu-clear {
+    display: none;
+  }
 }
 

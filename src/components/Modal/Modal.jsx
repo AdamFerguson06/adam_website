@@ -470,6 +470,14 @@ const Modal = () => {
                                   </label>
                                 ))}
                             </div>
+                            {selectedSkills.length > 0 && (
+                              <button
+                                className="skill-filter-menu-clear"
+                                onClick={clearSkillFilter}
+                              >
+                                Clear Selected
+                              </button>
+                            )}
                           </motion.div>
                         )}
                       </AnimatePresence>
@@ -485,6 +493,20 @@ const Modal = () => {
                     >
                       {isAnyExpanded() ? 'Collapse All' : 'Expand All'}
                     </button>
+                  </div>
+                  {/* Mobile-only filter actions row */}
+                  <div className="mobile-filter-actions">
+                    <button
+                      className="expand-collapse-all"
+                      onClick={() => toggleExpandAll(content.companies)}
+                    >
+                      {isAnyExpanded() ? 'Collapse All' : 'Expand All'}
+                    </button>
+                    {selectedSkills.length > 0 && (
+                      <button className="skill-filter-clear" onClick={clearSkillFilter}>
+                        Clear Filters
+                      </button>
+                    )}
                   </div>
                 </div>
               ) : (
