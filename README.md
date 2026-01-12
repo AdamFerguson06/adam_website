@@ -4,7 +4,7 @@ Interactive portfolio website featuring a pannable Manhattan map with clickable 
 
 ## Live Site
 
-[View the live portfolio](https://adamferguson.netlify.app) (or your deployed URL)
+[adamferg.com](https://adamferg.com)
 
 ## Features
 
