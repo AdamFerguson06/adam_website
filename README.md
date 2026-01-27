@@ -31,7 +31,7 @@ Interactive portfolio website featuring a pannable Manhattan map with clickable 
 
 ## Tech Stack
 
-- **React 18** - UI framework
+- **React 19** - UI framework
 - **Vite** - Build tool and dev server
 - **Zustand** - Lightweight state management
 - **Framer Motion** - Animations and transitions
