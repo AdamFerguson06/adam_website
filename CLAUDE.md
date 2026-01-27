@@ -58,6 +58,7 @@ The flow:
    ```
 
 3. **Before committing: Check documentation** (CRITICAL for Claude Code continuity)
+   - Review `README.md` to see if any updates are needed to keep it accurate (e.g., tech stack versions, features, project structure)
    - Review which docs in `docs/` folder might be affected by your changes
    - Update existing docs if behavior, configuration, or architecture changed
    - Create new docs if adding a major feature or integration
