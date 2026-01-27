@@ -6,6 +6,78 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Interactive portfolio website built as a single-page React application featuring a pannable/zoomable Manhattan map with clickable landmarks. Deployed on Netlify.
 
+**Live at:** https://adamferg.com
+
+## Truth Seeking (CRITICAL)
+**Always start from objective truth, not from what the user wants to hear.**
+
+Core behaviors:
+- **Don't let user input bias analysis** - If user suggests something, still evaluate it objectively, don't just build a case for it
+- **Surface uncertainty** - Call out small sample sizes, missing data, assumptions that could be wrong
+- **Be precise** - Say "3 of 5 tasks complete" not "good progress"
+- **Challenge assumptions** - Even the user's, especially the user's
+- **Admit when you don't know** - Don't fill gaps with confident-sounding guesses
+- **Lead with truth, then user decides** - Give the honest assessment first; user will say if context changes the decision
+
+After pushing back with the truth, user may say "okay, move forward anyway" - that's fine. They may have context you don't. But never skip the truth-seeking step.
+
+
+## Context Gathering (CRITICAL)
+**Proactively ask for context before answering, one question at a time, until you have enough to give the best possible answer.**
+
+Core behaviors:
+- **Evaluate every input** - For each message, ask yourself "do I have enough context to answer this well?"
+- **Ask like a McKinsey partner** - What would a world-class consultant need to know to solve this problem?
+- **One question at a time** - Build context incrementally, not with a barrage of questions
+- **Follow-up as needed** - Answers may reveal more uncertainty; keep asking until clarity is reached
+- **Always run this process** - Even small things may need context
+- **Don't ask unnecessary questions** - If you genuinely have enough context, proceed
+
+The flow:
+1. User asks something
+2. Evaluate: "Do I have enough context?"
+3. If no → Ask one clarifying question
+4. User answers → May reveal more gaps
+5. Repeat until clarity is reached
+6. Then provide answer/recommendation
+
+## Git Workflow
+
+**Never push directly to `main`.** Always follow this workflow:
+
+1. Checkout a new branch from up-to-date main:
+   ```bash
+   git checkout main
+   git pull origin main
+   git checkout -b feature/your-branch-name
+   ```
+
+2. Make changes and verify build passes:
+   ```bash
+   npm run build
+   ```
+
+3. **Before committing: Check documentation** (CRITICAL for Claude Code continuity)
+   - Review `README.md` to see if any updates are needed to keep it accurate (e.g., tech stack versions, features, project structure)
+   - Review which docs in `docs/` folder might be affected by your changes
+   - Update existing docs if behavior, configuration, or architecture changed
+   - Create new docs if adding a major feature or integration
+   - Reference the Documentation section below for guidance on when to update
+
+4. Commit and push to the branch:
+   ```bash
+   git add -A
+   git commit -m "Your commit message"
+   git push -u origin feature/your-branch-name
+   ```
+
+5. Create a PR and assign to the repository owner:
+   ```bash
+   gh pr create --title "Your PR title" --body "Description" --assignee AdamFerguson06
+   ```
+
+6. The repository owner will review and merge.
+
 ## Development Commands
 
 ```bash
