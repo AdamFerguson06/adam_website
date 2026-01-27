@@ -70,7 +70,12 @@ The flow:
    git push -u origin feature/your-branch-name
    ```
 
-5. The repository owner will open a PR and merge manually after reviews pass.
+5. Create a PR and assign to the repository owner:
+   ```bash
+   gh pr create --title "Your PR title" --body "Description" --assignee AdamFerguson06
+   ```
+
+6. The repository owner will review and merge.
 
 ## Development Commands
 
