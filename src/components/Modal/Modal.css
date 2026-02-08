@@ -401,7 +401,7 @@
 .company-card {
   display: grid;
   grid-template-columns: 1fr 3fr;
-  border: 1px solid #eee;
+  border: 1px solid #c0c0c0;
   border-radius: 12px;
   margin-bottom: 16px;
   overflow: hidden;
@@ -413,7 +413,7 @@
 
 .company-card-left {
   padding: 20px;
-  border-right: 1px solid #eee;
+  border-right: 1px solid #c0c0c0;
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -446,7 +446,7 @@
 
 /* Project accordion items in right column */
 .project-accordion-item {
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #c0c0c0;
 }
 
 .project-accordion-item:last-child {
@@ -850,7 +850,7 @@
 
   .company-card-left {
     border-right: none;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid #c0c0c0;
     padding: 16px;
   }
 
