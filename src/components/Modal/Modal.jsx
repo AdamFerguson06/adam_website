@@ -29,7 +29,7 @@ What defines me is a willingness to do whatever a project requires, even when it
     companies: [
       {
         name: 'Falcon Media',
-        role: 'Co-Founder',
+        role: 'Co-Founder, CEO',
         period: '2025 - Present',
         projects: [
           {
