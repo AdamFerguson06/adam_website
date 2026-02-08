@@ -9,12 +9,12 @@ const sectionContent = {
   about: {
     label: 'About',
     title: 'About Me',
-    description: 'I\'m a full-stack analytics leader turned entrepreneur, currently running Falcon Media, a digital marketing agency I co-founded. I\'ve built data warehouses from scratch at multiple startups, led initiatives from $0 to $20k in daily profit, and now handle everything from sales to SEM as a founder. I thrive when the work requires wearing many hats.',
+    description: 'I\'m a full-stack analytics leader turned entrepreneur, currently running Falcon Media, a digital marketing agency I co-founded. I\'ve built data warehouses from scratch at multiple startups, led initiatives from $0 to $50k in daily profit, and now handle everything from sales to SEM as a founder. I thrive when the work requires wearing many hats.',
     longDescription: `I started my career at EverQuote as a Quantitative Analyst, where I spent 2.5 years growing into a Senior Quantitative Analyst. I led data analytics for a new business unit that grew to 30% of the company's total revenue within a year.
 
 From there, I moved through a series of progressively senior analytics roles: building star schema and data vault models at Koalafi, establishing the original data warehouse architecture at Unstoppable Domains, and engineering the analytics infrastructure at O Positiv, where I developed LTV prediction models that improved forecast precision by 75%.
 
-In late 2024, I returned to EverQuote as a consultant to lead data engineering, analytics, and product management for a new initiative. I built the data architecture from scratch, set up all data reporting, developed SEM campaigns, and helped grow the initiative from $0 to $20k in daily profit.
+In late 2024, I returned to EverQuote as a consultant to lead data engineering, analytics, and product management for a new initiative. I built the data architecture from scratch, set up all data reporting, developed SEM campaigns, and helped grow the initiative from $0 to $50k in daily profit.
 
 That experience pushed me to build something of my own. In 2025, I co-founded Falcon Media, a full-stack digital marketing agency. As Co-Founder, I handle: legal, contracts, sales, account management, finances, landing pages, SEM, and analytics.
 
@@ -25,7 +25,7 @@ What defines me is a willingness to do whatever a project requires, even when it
   projects: {
     label: 'Projects',
     title: 'My Projects',
-    description: 'Selected work across data engineering, web development, and growth marketing.',
+    description: 'Projects I\'ve built and shipped across data infrastructure, web products, and growth.',
     companies: [
       {
         name: 'Falcon Media',
@@ -34,7 +34,7 @@ What defines me is a willingness to do whatever a project requires, even when it
         projects: [
           {
             title: 'Lead Gen Website Portfolio',
-            description: 'Five live websites generating leads across insurance, loans, and banking. React frontends, Netlify hosting, full FTC compliance.',
+            description: 'Five revenue-generating websites across insurance, personal loans, and banking verticals. Actively driving lead volume with full FTC compliance baked in from day one.',
             skills: ['React', 'AI-Assisted Development', 'Web Development', 'Compliance'],
             links: [
               { label: 'quotefii.com', url: 'https://quotefii.com' },
@@ -46,7 +46,7 @@ What defines me is a willingness to do whatever a project requires, even when it
           },
           {
             title: 'Data Pipeline & Warehouse',
-            description: 'End-to-end data infrastructure powering all reporting and attribution. AWS Lambda event tracking, PostgreSQL storage, reverse ETL to Google Ads.',
+            description: 'Full-stack attribution system tracking every lead from click to revenue. AWS Lambda event capture, PostgreSQL storage, and reverse ETL to Google Ads for offline conversion optimization.',
             skills: ['Python', 'SQL', 'AWS Lambda', 'ETL/ELT', 'Data Warehousing'],
           },
           {
@@ -56,7 +56,7 @@ What defines me is a willingness to do whatever a project requires, even when it
           },
           {
             title: 'Google Ads Campaigns',
-            description: 'Five-figure monthly budgets across auto insurance, personal loans, and healthcare. Certified for pharmaceutical advertising.',
+            description: 'Profitably managing five-figure monthly ad spend across auto insurance, personal loans, and healthcare. One of few agencies certified for pharmaceutical advertising on Google.',
             skills: ['Google Ads', 'SEM', 'Campaign Optimization', 'Analytics'],
           },
           {
@@ -72,13 +72,13 @@ What defines me is a willingness to do whatever a project requires, even when it
         period: '2024 - 2025',
         projects: [
           {
-            title: 'Data Architecture & Reporting',
-            description: 'Built data architecture from scratch for a new initiative. Set up all reporting infrastructure and analytics pipelines.',
+            title: 'Data Architecture',
+            description: 'Designed the data architecture from scratch for a new business initiative, including warehousing, reporting pipelines, and analytics infrastructure that supported scaling to $50k/day in profit.',
             skills: ['SQL', 'Data Warehousing', 'ETL/ELT', 'Data Analytics'],
           },
           {
             title: 'Growth Initiative',
-            description: 'Led analytics, data engineering, and product management for a new initiative that grew from $0 to $50k in daily profit.',
+            description: 'Owned the full analytics-to-optimization loop for a new initiative that scaled from $0 to $50k in daily profit: data engineering, reporting, SEM campaigns, and product decisions.',
             skills: ['SEM', 'Google Ads', 'Analytics', 'Product Management'],
           },
         ],
@@ -90,22 +90,22 @@ What defines me is a willingness to do whatever a project requires, even when it
         projects: [
           {
             title: 'Analytics Data Warehouse',
-            description: 'Engineered the original data warehouse using SQL, Fivetran, Airflow, DBT, and Snowflake. Star schema design with LTV prediction models that improved 12/24-month forecast precision by 75%.',
+            description: 'Designed and built O Positiv\'s first data warehouse from scratch. Star schema architecture on Snowflake with Fivetran ingestion, Airflow orchestration, and DBT transformations.',
             skills: ['SQL', 'DBT', 'Snowflake', 'Data Warehousing', 'ETL/ELT'],
           },
           {
             title: 'LTV Prediction Models',
-            description: 'Built models enabling diverse LTV forecast methodologies. Enhanced forecast precision by 75% across 12 and 24-month horizons.',
+            description: 'Built customer lifetime value prediction models across multiple methodologies. Improved 12- and 24-month forecast precision by 75%, directly informing acquisition spend decisions.',
             skills: ['Python', 'Data Science', 'Forecasting', 'Analytics'],
           },
           {
             title: 'Marketing Acquisition Dashboards',
-            description: 'Led marketing acquisition engineering efforts. Built primary dashboards establishing CAC and CPA measurements, reducing ad performance analysis by 8 hours per week.',
+            description: 'Built the company\'s first unified CAC and CPA dashboards, giving marketing real-time visibility into acquisition costs. Reduced weekly ad performance analysis by 8 hours.',
             skills: ['Data Visualization', 'SQL', 'Marketing Analytics', 'Business Intelligence'],
           },
           {
             title: 'A/B Testing Framework',
-            description: 'Developed Python scripts for A/B testing using Pandas, NumPy, and Statsmodels. Reduced analytical time by 4 hours per test.',
+            description: 'Built a reusable statistical testing framework for the marketing team, automating significance calculations and result reporting. Cut per-test analysis time by 4 hours.',
             skills: ['Python', 'A/B Testing', 'Data Science', 'Automation'],
           },
         ],
@@ -116,23 +116,23 @@ What defines me is a willingness to do whatever a project requires, even when it
         period: '2021 - 2022',
         projects: [
           {
-            title: 'Data Warehouse Modeling',
-            description: 'Collaborated with data engineering to build star schema and data vault models using DBT, GitLab, and Snowflake.',
+            title: 'Star Schema & Data Vault Models',
+            description: 'Designed star schema and data vault models in partnership with data engineering, built on Snowflake with DBT transformations and GitLab version control.',
             skills: ['SQL', 'DBT', 'Snowflake', 'Data Warehousing'],
           },
           {
-            title: 'Executive Sales Reporting',
-            description: 'Led weekly sales analytics meetings with C-suite, delivering key metrics that drove sales performance and strategic decision-making.',
+            title: 'C-Suite Sales Analytics',
+            description: 'Owned weekly sales analytics for C-suite leadership, covering pipeline velocity, conversion rates, and revenue forecasts that informed go-to-market strategy.',
             skills: ['Data Visualization', 'Business Intelligence', 'Analytics'],
           },
           {
             title: 'Automated Reporting Dashboards',
-            description: 'Created Python scripts and Tableau dashboards to automate weekly reporting. Decreased manual reporting by 4 hours per week.',
+            description: 'Automated the weekly sales reporting workflow with Python pipelines feeding into Tableau dashboards. Saved 4 hours per week of manual reporting.',
             skills: ['Python', 'Tableau', 'Automation', 'Data Visualization'],
           },
           {
             title: 'Revenue Forecasting',
-            description: 'Built 2022 revenue forecast and monthly commission payout models using Snowflake and Excel.',
+            description: 'Built the 2022 annual revenue forecast and monthly commission payout models, used for financial planning and sales compensation across the organization.',
             skills: ['SQL', 'Excel', 'Forecasting', 'Financial Modeling'],
           },
         ],
@@ -144,7 +144,7 @@ What defines me is a willingness to do whatever a project requires, even when it
         projects: [
           {
             title: 'New Business Unit Analytics',
-            description: 'Led data analytics for a brand new business unit that grew to 30% of EverQuote\'s total revenue within 12 months of inception.',
+            description: 'Built the analytics infrastructure and drove data-informed decisions for a new business unit from launch. The unit grew to 30% of EverQuote\'s total revenue within its first 12 months.',
             skills: ['SQL', 'Data Analytics', 'Business Intelligence'],
           },
           {
@@ -171,9 +171,16 @@ What defines me is a willingness to do whatever a project requires, even when it
   misc: {
     label: 'Misc',
     title: 'Miscellaneous',
-    description: 'A collection of experiments, side projects, and other creative endeavors that don\'t fit neatly into other categories. Expect the unexpected!',
-    linkText: 'Explore',
-    linkHref: '#misc',
+    description: 'A collection of experiments, side projects, and other creative endeavors that don\'t fit neatly into other categories.',
+    miscProjects: [
+      {
+        name: 'Catan Board Setup',
+        description: 'Built on Christmas Eve because I got tired of arguing over whether the board was set up fairly. 50 pre-generated, rules-compliant layouts. Just hit shuffle and start playing.',
+        siteUrl: 'https://catanboardsetup.com/',
+        siteLabel: 'CatanBoardSetup.com',
+        repoUrl: 'https://github.com/AdamFerguson06/catan-board-setup',
+      },
+    ],
   },
   xg: {
     label: 'xG',
@@ -573,6 +580,44 @@ const Modal = () => {
                           );
                         })}
                       </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+              {content.miscProjects && (
+                <div className="misc-projects">
+                  {content.miscProjects.map((project, idx) => (
+                    <div className="misc-project-card" key={idx}>
+                      <h3 className="misc-project-name">{project.name}</h3>
+                      <p className="misc-project-description">{project.description}</p>
+                      {project.siteUrl && (
+                        <a
+                          href={project.siteUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="misc-project-site-link"
+                        >
+                          {project.siteLabel || project.siteUrl.replace(/^https?:\/\//, '').replace(/\/$/, '')}
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <line x1="7" y1="17" x2="17" y2="7"></line>
+                            <polyline points="7 7 17 7 17 17"></polyline>
+                          </svg>
+                        </a>
+                      )}
+                      {project.repoUrl && (
+                        <a
+                          href={project.repoUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="misc-project-repo-link"
+                        >
+                          GitHub Repo
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <line x1="7" y1="17" x2="17" y2="7"></line>
+                            <polyline points="7 7 17 7 17 17"></polyline>
+                          </svg>
+                        </a>
+                      )}
                     </div>
                   ))}
                 </div>
