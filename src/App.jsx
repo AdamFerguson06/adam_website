@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
+import { Agentation } from 'agentation';
 import LeftPanel from './components/LeftPanel/LeftPanel';
 import RightPanel from './components/RightPanel/RightPanel';
 import Landmark from './components/Map/Landmark';
@@ -269,6 +270,8 @@ function App() {
           <span className="scroll-hint-arrow">→</span>
         </div>
       )}
+
+      {import.meta.env.DEV && <Agentation />}
     </div>
   );
 }

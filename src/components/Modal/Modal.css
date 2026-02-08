@@ -577,7 +577,7 @@
 .modal-long-description-inner p {
   font-size: 17px;
   line-height: 1.7;
-  color: #555;
+  color: var(--text-dark);
   font-weight: 500;
   margin-bottom: 16px;
 }
@@ -601,9 +601,9 @@
 }
 
 .modal-link:hover {
-  background-color: var(--accent);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(255, 107, 53, 0.3);
+  background-color: #333;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .modal-link svg {
@@ -617,7 +617,7 @@
 /* Desktop enhancements - larger modal and text for readability */
 @media (min-width: 541px) {
   .modal {
-    max-width: 960px;
+    max-width: max(960px, 80%);
     min-height: 70vh;
     max-height: 94vh;
   }

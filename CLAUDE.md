@@ -21,6 +21,36 @@ Core behaviors:
 
 After pushing back with the truth, user may say "okay, move forward anyway" - that's fine. They may have context you don't. But never skip the truth-seeking step.
 
+**Hard rule:** When the user suggests changing analysis, conclusions, or evidence rankings, ALWAYS state your independent assessment BEFORE making any edits. Never edit first, assess second. If you disagree, say so. Only proceed with the edit after the user has heard your pushback and confirmed they want to proceed anyway.
+
+## Sample Size Discipline (CRITICAL)
+**This is a small account (~45 clicks/day). Never draw concrete conclusions from insufficient data.**
+
+Core behaviors:
+- **State the sample size alongside every metric** - "17.4% CR (4/23 clicks)" not just "17.4% CR"
+- **Flag when samples are too small for conclusions** - A single day's data (20-50 clicks) has wide confidence intervals. Don't treat daily swings as trends.
+- **Require minimum thresholds before recommending action:**
+  - Daily metrics: Directional only. Never recommend changes based on one day.
+  - 3-5 day trends (150-250 clicks): Preliminary signal. Worth monitoring, not acting on.
+  - 7+ day trends (300+ clicks): Actionable with caveats noted.
+  - 14+ day trends (600+ clicks): Reliable for decisions.
+- **Weekend data is especially thin** - Saturday/Sunday volume drops 50%+. Always call this out, never treat weekend-only data as representative.
+- **Calculate and show confidence intervals** for key comparisons (use Wilson interval for proportions with small n).
+- **When the user wants to act on thin data, say so** - Give the honest sample size assessment first. The user may have business context that justifies acting anyway, but never skip the warning.
+
+Failure mode to avoid: Treating a 3-day, 85-click recovery trend the same as a 10-day, 400-click trend. Both show direction, but only the latter supports concrete decisions.
+
+## Fact Verification (CRITICAL)
+**Before stating dates, times, or facts in documents, VERIFY them.**
+
+This is non-negotiable:
+- **Run `git log`** to verify merge/commit dates before writing them in documents
+- **Check file timestamps** with `ls -la` or `stat` when dates matter
+- **Never assume conversational timing equals actual timing** - "we just discussed this" does NOT mean "this happened today"
+- **If you cannot verify, say so explicitly** - Write "I cannot verify this date - please confirm" rather than guessing
+
+Failure mode to avoid: Treating conversation flow as a source of truth for real-world timelines. Always check the actual data.
+
 
 ## Context Gathering (CRITICAL)
 **Proactively ask for context before answering, one question at a time, until you have enough to give the best possible answer.**
@@ -57,26 +87,38 @@ The flow:
    npm run build
    ```
 
-3. **Before committing: Check documentation** (CRITICAL for Claude Code continuity)
-   - Review `README.md` to see if any updates are needed to keep it accurate (e.g., tech stack versions, features, project structure)
+3. **Run tests and lint before committing** (CRITICAL - CI will fail otherwise):
+   ```bash
+   npm test -- --run    # Run tests (non-watch mode)
+   npm run lint         # Check for lint errors
+   ```
+   - Fix any failing tests or lint errors before proceeding
+   - Warnings are acceptable, but errors must be resolved
+   - If tests fail, investigate and fix the root cause
+
+4. **Before committing: Check documentation** (CRITICAL for Claude Code continuity)
    - Review which docs in `docs/` folder might be affected by your changes
    - Update existing docs if behavior, configuration, or architecture changed
    - Create new docs if adding a major feature or integration
    - Reference the Documentation section below for guidance on when to update
 
-4. Commit and push to the branch:
+5. **Before committing: Update MEMORY.md** with any new knowledge from this session:
+   - Architectural decisions made and why
+   - Bugs found and their root causes
+   - New patterns or conventions established
+   - Gotchas discovered that would save time next session
+   - Keep entries concise. For detailed notes, create topic files (e.g., `memory/debugging.md`) and link from MEMORY.md.
+
+6. Commit and push to the branch:
    ```bash
    git add -A
    git commit -m "Your commit message"
    git push -u origin feature/your-branch-name
    ```
 
-5. Create a PR and assign to the repository owner:
-   ```bash
-   gh pr create --title "Your PR title" --body "Description" --assignee AdamFerguson06
-   ```
+7. The repository owner will open a PR and merge manually after reviews pass.
 
-6. The repository owner will review and merge.
+**PR assignments:** Always assign `AdamFerguson06` on every PR created with `gh pr create`.
 
 ## Development Commands
 
