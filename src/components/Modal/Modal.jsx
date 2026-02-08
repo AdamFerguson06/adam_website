@@ -187,7 +187,6 @@ What defines me is a willingness to do whatever a project requires, even when it
 const Modal = () => {
   const { isModalOpen, activeProject, closeModal, openModal } = useMapStore();
   const [isExpanded, setIsExpanded] = useState(false);
-  const [expandedCompanies, setExpandedCompanies] = useState({});
   const [expandedProjects, setExpandedProjects] = useState({});
   const [selectedSkills, setSelectedSkills] = useState([]);
   const [skillDropdownOpen, setSkillDropdownOpen] = useState(false);
@@ -235,10 +234,9 @@ const Modal = () => {
     setSelectedSkills([]);
   };
 
-  // Check if any companies/projects are expanded
+  // Check if any projects are expanded
   const isAnyExpanded = () => {
-    return Object.values(expandedCompanies).some(Boolean) ||
-           Object.values(expandedProjects).some(Boolean);
+    return Object.values(expandedProjects).some(Boolean);
   };
 
   // Expand or collapse all
@@ -248,30 +246,25 @@ const Modal = () => {
     const shouldExpand = !isAnyExpanded();
 
     if (shouldExpand) {
-      const newExpandedCompanies = {};
       const newExpandedProjects = {};
       companies.forEach(company => {
-        newExpandedCompanies[company.name] = true;
         company.projects.forEach((_, idx) => {
           newExpandedProjects[`${company.name}-${idx}`] = true;
         });
       });
-      setExpandedCompanies(newExpandedCompanies);
       setExpandedProjects(newExpandedProjects);
     } else {
-      setExpandedCompanies({});
       setExpandedProjects({});
     }
   };
 
-  // Auto-expand companies and projects that match selected skills
+  // Auto-expand projects that match selected skills
   useEffect(() => {
     if (selectedSkills.length === 0) return;
 
     const content = sectionContent.projects;
     if (!content?.companies) return;
 
-    const newExpandedCompanies = {};
     const newExpandedProjects = {};
 
     content.companies.forEach(company => {
@@ -280,22 +273,13 @@ const Modal = () => {
           selectedSkills.includes(skill)
         );
         if (hasMatchingSkill) {
-          newExpandedCompanies[company.name] = true;
           newExpandedProjects[`${company.name}-${idx}`] = true;
         }
       });
     });
 
-    setExpandedCompanies(prev => ({ ...prev, ...newExpandedCompanies }));
     setExpandedProjects(prev => ({ ...prev, ...newExpandedProjects }));
   }, [selectedSkills]);
-
-  const toggleCompany = (companyName) => {
-    setExpandedCompanies(prev => ({
-      ...prev,
-      [companyName]: !prev[companyName]
-    }));
-  };
 
   const toggleProject = (projectKey) => {
     setExpandedProjects(prev => ({
@@ -336,7 +320,6 @@ const Modal = () => {
   useEffect(() => {
     if (!isModalOpen) {
       setIsExpanded(false);
-      setExpandedCompanies({});
       setExpandedProjects({});
       setSelectedSkills([]);
       setSkillDropdownOpen(false);
@@ -516,110 +499,80 @@ const Modal = () => {
               {content.companies && (
                 <div className="modal-companies">
                   {content.companies.map((company) => (
-                    <div key={company.name} className="company-section">
-                      <button
-                        className={`company-header ${expandedCompanies[company.name] ? 'expanded' : ''}`}
-                        onClick={() => toggleCompany(company.name)}
-                        aria-expanded={expandedCompanies[company.name]}
-                      >
-                        <div className="company-info">
-                          <span className="company-name">{company.name}</span>
-                          <span className="company-meta">{company.role} · {company.period}</span>
-                        </div>
-                        <svg
-                          width="16"
-                          height="16"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          className="expand-icon"
-                        >
-                          <polyline points="6 9 12 15 18 9"></polyline>
-                        </svg>
-                      </button>
-                      <AnimatePresence>
-                        {expandedCompanies[company.name] && (
-                          <motion.div
-                            className="company-projects"
-                            initial={{ height: 0, opacity: 0 }}
-                            animate={{ height: 'auto', opacity: 1 }}
-                            exit={{ height: 0, opacity: 0 }}
-                            transition={{ duration: 0.3, ease: 'easeInOut' }}
-                          >
-                            <div className="company-projects-inner">
-                              {company.projects.map((project, idx) => {
-                                const projectKey = `${company.name}-${idx}`;
-                                return (
-                                  <div key={projectKey} className="project-item">
-                                    <button
-                                      className={`project-header ${expandedProjects[projectKey] ? 'expanded' : ''}`}
-                                      onClick={() => toggleProject(projectKey)}
-                                      aria-expanded={expandedProjects[projectKey]}
-                                    >
-                                      <span className="project-title">{project.title}</span>
-                                      <svg
-                                        width="14"
-                                        height="14"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        strokeWidth="2"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        className="expand-icon"
-                                      >
-                                        <polyline points="6 9 12 15 18 9"></polyline>
-                                      </svg>
-                                    </button>
-                                    <AnimatePresence>
-                                      {expandedProjects[projectKey] && (
-                                        <motion.div
-                                          className="project-details"
-                                          initial={{ height: 0, opacity: 0 }}
-                                          animate={{ height: 'auto', opacity: 1 }}
-                                          exit={{ height: 0, opacity: 0 }}
-                                          transition={{ duration: 0.2, ease: 'easeInOut' }}
-                                        >
-                                          <div className="project-details-inner">
-                                            <p className="project-description">{project.description}</p>
-                                            <div className="project-skills">
-                                              {project.skills.map((skill) => (
-                                                <span key={skill} className="skill-tag">{skill}</span>
-                                              ))}
-                                            </div>
-                                            {project.links && (
-                                              <div className="project-links">
-                                                {project.links.map((link) => (
-                                                  <a
-                                                    key={link.url}
-                                                    href={link.url}
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                    className="project-link"
-                                                  >
-                                                    {link.label}
-                                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                                      <line x1="7" y1="17" x2="17" y2="7"></line>
-                                                      <polyline points="7 7 17 7 17 17"></polyline>
-                                                    </svg>
-                                                  </a>
-                                                ))}
-                                              </div>
-                                            )}
-                                          </div>
-                                        </motion.div>
+                    <div key={company.name} className="company-card">
+                      <div className="company-card-left">
+                        <h3 className="company-card-name">{company.name}</h3>
+                        <span className="company-card-role">{company.role}</span>
+                        <span className="company-card-period">{company.period}</span>
+                      </div>
+                      <div className="company-card-right">
+                        {company.projects.map((project, idx) => {
+                          const projectKey = `${company.name}-${idx}`;
+                          return (
+                            <div key={projectKey} className="project-accordion-item">
+                              <button
+                                className={`project-accordion-header ${expandedProjects[projectKey] ? 'expanded' : ''}`}
+                                onClick={() => toggleProject(projectKey)}
+                                aria-expanded={expandedProjects[projectKey]}
+                              >
+                                <span className="project-accordion-title">{project.title}</span>
+                                <svg
+                                  width="14"
+                                  height="14"
+                                  viewBox="0 0 24 24"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  strokeWidth="2"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  className="expand-icon"
+                                >
+                                  <polyline points="6 9 12 15 18 9"></polyline>
+                                </svg>
+                              </button>
+                              <AnimatePresence>
+                                {expandedProjects[projectKey] && (
+                                  <motion.div
+                                    className="project-details"
+                                    initial={{ height: 0, opacity: 0 }}
+                                    animate={{ height: 'auto', opacity: 1 }}
+                                    exit={{ height: 0, opacity: 0 }}
+                                    transition={{ duration: 0.2, ease: 'easeInOut' }}
+                                  >
+                                    <div className="project-details-inner">
+                                      <p className="project-description">{project.description}</p>
+                                      <div className="project-skills">
+                                        {project.skills.map((skill) => (
+                                          <span key={skill} className="skill-tag">{skill}</span>
+                                        ))}
+                                      </div>
+                                      {project.links && (
+                                        <div className="project-links">
+                                          {project.links.map((link) => (
+                                            <a
+                                              key={link.url}
+                                              href={link.url}
+                                              target="_blank"
+                                              rel="noopener noreferrer"
+                                              className="project-link"
+                                            >
+                                              {link.label}
+                                              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                                <line x1="7" y1="17" x2="17" y2="7"></line>
+                                                <polyline points="7 7 17 7 17 17"></polyline>
+                                              </svg>
+                                            </a>
+                                          ))}
+                                        </div>
                                       )}
-                                    </AnimatePresence>
-                                  </div>
-                                );
-                              })}
+                                    </div>
+                                  </motion.div>
+                                )}
+                              </AnimatePresence>
                             </div>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
+                          );
+                        })}
+                      </div>
                     </div>
                   ))}
                 </div>

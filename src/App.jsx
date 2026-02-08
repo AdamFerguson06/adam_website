@@ -1,5 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
-import { Agentation } from 'agentation';
+import { useState, useRef, useEffect, lazy, Suspense } from 'react';
 import LeftPanel from './components/LeftPanel/LeftPanel';
 import RightPanel from './components/RightPanel/RightPanel';
 import Landmark from './components/Map/Landmark';
@@ -7,6 +6,8 @@ import Modal from './components/Modal/Modal';
 import useMapStore from './store/useMapStore';
 import { landmarks } from './data/projects';
 import './App.css';
+
+const Agentation = lazy(() => import('agentation').then(m => ({ default: m.Agentation })));
 
 // Original Figma design dimensions for the map
 const DESIGN_WIDTH = 1000;
@@ -271,7 +272,11 @@ function App() {
         </div>
       )}
 
-      {import.meta.env.DEV && <Agentation />}
+      {import.meta.env.DEV && (
+        <Suspense fallback={null}>
+          <Agentation />
+        </Suspense>
+      )}
     </div>
   );
 }
