@@ -617,7 +617,7 @@
 /* Desktop enhancements - larger modal and text for readability */
 @media (min-width: 541px) {
   .modal {
-    max-width: 80%;
+    max-width: max(960px, 80%);
     min-height: 70vh;
     max-height: 94vh;
   }
