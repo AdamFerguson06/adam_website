@@ -1,10 +1,14 @@
 import { useRef, useEffect, useState } from 'react';
 import './LeftPanel.css';
+import { MODAL_DEBOUNCE_MS } from '../../constants';
 
 const LeftPanel = ({ sidebarOpen = false, onCloseSidebar, portraitModalOpen, setPortraitModalOpen }) => {
   const portraitRef = useRef(null);
   const prevSidebarOpenRef = useRef(sidebarOpen);
   const justClosedSidebarRef = useRef(false);
+  const justHandledRef = useRef(false);
+  const justHandledTimerRef = useRef(null);
+  const debounceTimeoutRef = useRef(null);
   const [portraitNoHover, setPortraitNoHover] = useState(false);
 
   useEffect(() => {
@@ -25,49 +29,36 @@ const LeftPanel = ({ sidebarOpen = false, onCloseSidebar, portraitModalOpen, set
     prevSidebarOpenRef.current = sidebarOpen;
   }, [sidebarOpen]);
 
-  const handlePortraitTouchEnd = (e) => {
-    e.preventDefault();
-    
-    if (justClosedSidebarRef.current) {
-      return;
-    }
-    
-    // If sidebar is open, close it
-    if (sidebarOpen && onCloseSidebar) {
-      justClosedSidebarRef.current = true;
-      setPortraitNoHover(true);
-      onCloseSidebar();
-      setTimeout(() => {
-        setPortraitNoHover(false);
-        justClosedSidebarRef.current = false;
-      }, 400);
-      return;
-    }
-    
-    // Otherwise, toggle profile menu
-    setPortraitModalOpen(!portraitModalOpen);
-  };
+  useEffect(() => {
+    return () => {
+      if (debounceTimeoutRef.current) clearTimeout(debounceTimeoutRef.current);
+      if (justHandledTimerRef.current) clearTimeout(justHandledTimerRef.current);
+    };
+  }, []);
 
-  const handlePortraitClick = (e) => {
-    e.preventDefault();
+  const handlePortraitInteraction = (e) => {
+    if (justHandledRef.current) return;
+    justHandledRef.current = true;
+    justHandledTimerRef.current = setTimeout(() => { justHandledRef.current = false; }, MODAL_DEBOUNCE_MS);
+
     e.stopPropagation();
-    
+
     if (justClosedSidebarRef.current) {
       return;
     }
-    
+
     // If sidebar is open, close it
     if (sidebarOpen && onCloseSidebar) {
       justClosedSidebarRef.current = true;
       setPortraitNoHover(true);
       onCloseSidebar();
-      setTimeout(() => {
+      debounceTimeoutRef.current = setTimeout(() => {
         setPortraitNoHover(false);
         justClosedSidebarRef.current = false;
-      }, 400);
+      }, MODAL_DEBOUNCE_MS);
       return;
     }
-    
+
     // Otherwise, toggle profile menu
     setPortraitModalOpen(!portraitModalOpen);
   };
@@ -80,36 +71,39 @@ const LeftPanel = ({ sidebarOpen = false, onCloseSidebar, portraitModalOpen, set
     <>
       <div className="left-panel">
         <div className="profile-section">
-          <div 
+          <button
+            type="button"
             ref={portraitRef}
-            className={`profile-image ${sidebarOpen ? 'sidebar-open' : ''} ${portraitNoHover ? 'no-hover' : ''}`}
+            className={`portrait-button profile-image ${sidebarOpen ? 'sidebar-open' : ''} ${portraitNoHover ? 'no-hover' : ''}`}
             onTouchStart={(e) => {
               if (sidebarOpen) {
                 e.preventDefault();
               }
             }}
-            onTouchEnd={handlePortraitTouchEnd}
-            onClick={handlePortraitClick}
-            role="button"
-            tabIndex={0}
-            onKeyPress={(e) => {
-              if (e.key === 'Enter') {
-                handlePortraitClick(e);
+            onTouchEnd={(e) => {
+              e.preventDefault();
+              handlePortraitInteraction(e);
+            }}
+            onClick={handlePortraitInteraction}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                handlePortraitInteraction(e);
               }
             }}
             aria-label={sidebarOpen ? "Close sidebar" : "Open profile menu"}
           >
-            <img src="/Ghibli Adam PFP.png" alt="Adam" />
-          </div>
+            <img src="/Ghibli Adam PFP.webp" alt="Adam Ferguson, Ghibli-style portrait" />
+          </button>
           <div className="name-and-links">
             <span className="profile-name">Adam</span>
             <div className="socials-section">
               <span className="socials-label">Socials</span>
               <div className="social-link-item">
                 <span>- </span>
-                <a 
-                  href="https://www.linkedin.com/in/adam-g-ferguson/" 
-                  target="_blank" 
+                <a
+                  href="https://www.linkedin.com/in/adam-g-ferguson/"
+                  target="_blank"
                   rel="noopener noreferrer"
                   className="social-link"
                   aria-label="LinkedIn Profile"
@@ -127,8 +121,8 @@ const LeftPanel = ({ sidebarOpen = false, onCloseSidebar, portraitModalOpen, set
         <>
           <div className="mobile-profile-overlay" onClick={closeMobileMenu}></div>
           <div className="mobile-profile-menu">
-            <button 
-              className="mobile-profile-close" 
+            <button
+              className="mobile-profile-close"
               onClick={closeMobileMenu}
               aria-label="Close profile menu"
             >
@@ -136,16 +130,16 @@ const LeftPanel = ({ sidebarOpen = false, onCloseSidebar, portraitModalOpen, set
             </button>
             <div className="mobile-profile-content">
               <div className="profile-image-large">
-                <img src="/Ghibli Adam PFP.png" alt="Adam" />
+                <img src="/Ghibli Adam PFP.webp" alt="Adam Ferguson, Ghibli-style portrait" />
               </div>
               <span className="profile-name-mobile">Adam</span>
               <div className="socials-section-mobile">
                 <span className="socials-label-mobile">Socials:</span>
                 <div className="social-link-item-mobile">
                   <span>- </span>
-                  <a 
-                    href="https://www.linkedin.com/in/adam-g-ferguson/" 
-                    target="_blank" 
+                  <a
+                    href="https://www.linkedin.com/in/adam-g-ferguson/"
+                    target="_blank"
                     rel="noopener noreferrer"
                     className="social-link-mobile"
                     aria-label="LinkedIn Profile"
@@ -163,4 +157,3 @@ const LeftPanel = ({ sidebarOpen = false, onCloseSidebar, portraitModalOpen, set
 };
 
 export default LeftPanel;
-

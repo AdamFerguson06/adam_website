@@ -72,8 +72,11 @@
   
   .map-content {
     transition: none;
-    will-change: transform;
     overflow: visible;
+  }
+
+  .map-content.dragging {
+    will-change: transform;
   }
   
   .map-image-wrapper {
