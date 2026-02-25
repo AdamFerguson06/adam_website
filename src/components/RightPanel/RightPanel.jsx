@@ -1,7 +1,15 @@
 import { useRef } from 'react';
 import useMapStore from '../../store/useMapStore';
 import { landmarks } from '../../data/projects';
+import { useIsMobile } from '../../hooks/useIsMobile';
 import './RightPanel.css';
+
+const navItems = [
+  { label: 'About', navTarget: 'about' },
+  { label: 'Projects', navTarget: 'projects' },
+  { label: 'Contact', navTarget: 'contact' },
+  { label: 'Misc.', navTarget: 'misc' },
+];
 
 const RightPanel = ({ isOpen, onClose }) => {
   const openModal = useMapStore((state) => state.openModal);
@@ -9,27 +17,17 @@ const RightPanel = ({ isOpen, onClose }) => {
   const highlightAllLandmarks = useMapStore((state) => state.highlightAllLandmarks);
   const setHighlightAllLandmarks = useMapStore((state) => state.setHighlightAllLandmarks);
   const highlightTimeoutRef = useRef(null);
-  
-  const navItems = [
-    { label: 'About', navTarget: 'about' },
-    { label: 'Projects', navTarget: 'projects' },
-    { label: 'Contact', navTarget: 'contact' },
-    { label: 'Misc.', navTarget: 'misc' },
-  ];
+  const isMobile = useIsMobile();
 
-  const isMobile = () => window.innerWidth <= 768;
-
-  const handleStarClick = (e) => {
-    e.preventDefault();
-
+  const handleStarClick = () => {
     // On mobile, close the menu when star is clicked
-    if (isMobile() && isOpen) {
+    if (isMobile && isOpen) {
       onClose();
       return;
     }
 
     // On desktop, highlight all landmarks for 2 seconds
-    if (!isMobile()) {
+    if (!isMobile) {
       // Clear any existing timeout
       if (highlightTimeoutRef.current) {
         clearTimeout(highlightTimeoutRef.current);
@@ -60,28 +58,28 @@ const RightPanel = ({ isOpen, onClose }) => {
   };
 
   const handleNavMouseEnter = (navTarget) => {
-    if (!isMobile()) {
+    if (!isMobile) {
       setHoveredNavTarget(navTarget);
     }
   };
 
   const handleNavMouseLeave = () => {
-    if (!isMobile()) {
+    if (!isMobile) {
       setHoveredNavTarget(null);
     }
   };
 
   return (
     <div className={`right-panel ${isOpen ? 'open' : ''}`}>
-      <a href="#star" className="star-icon" onClick={handleStarClick}>
-        <img src="/Shooting Start.png" alt="Shooting Star" />
-      </a>
-      
+      <button type="button" className="star-icon" onClick={handleStarClick} aria-label="Highlight all landmarks">
+        <img src="/Shooting Start.webp" alt="Shooting Star" />
+      </button>
+
       <nav className="nav-links">
         {navItems.map((item) => (
-          <a 
-            key={item.label} 
-            href={`#${item.navTarget}`} 
+          <a
+            key={item.label}
+            href={`#${item.navTarget}`}
             className="nav-link"
             onClick={(e) => handleNavClick(e, item.navTarget)}
             onMouseEnter={() => handleNavMouseEnter(item.navTarget)}
@@ -96,4 +94,3 @@ const RightPanel = ({ isOpen, onClose }) => {
 };
 
 export default RightPanel;
-

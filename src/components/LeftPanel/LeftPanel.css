@@ -24,6 +24,13 @@
   gap: 8px;
 }
 
+.portrait-button {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
 .profile-image {
   width: 90px;
   height: 90px;

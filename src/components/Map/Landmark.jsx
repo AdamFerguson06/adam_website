@@ -1,27 +1,29 @@
-import { useState } from 'react';
+import { useState, memo } from 'react';
 import useMapStore from '../../store/useMapStore';
+import { useIsMobile } from '../../hooks/useIsMobile';
 import './Landmark.css';
 
 const Landmark = ({ landmark, scale = 1 }) => {
   const [isHovered, setIsHovered] = useState(false);
-  const { openModal, hoveredNavTarget, highlightAllLandmarks } = useMapStore();
+  const openModal = useMapStore((s) => s.openModal);
+  const hoveredNavTarget = useMapStore((s) => s.hoveredNavTarget);
+  const highlightAllLandmarks = useMapStore((s) => s.highlightAllLandmarks);
+
+  const isMobile = useIsMobile();
 
   const handleClick = (e) => {
     e.stopPropagation();
-    openModal(landmark);
+    openModal(landmark, e.currentTarget);
   };
 
-  // Check if device supports hover (desktop)
-  const isMobile = () => window.innerWidth <= 768;
-
   const handleMouseEnter = () => {
-    if (!isMobile()) {
+    if (!isMobile) {
       setIsHovered(true);
     }
   };
 
   const handleMouseLeave = () => {
-    if (!isMobile()) {
+    if (!isMobile) {
       setIsHovered(false);
     }
   };
@@ -46,9 +48,11 @@ const Landmark = ({ landmark, scale = 1 }) => {
       onClick={handleClick}
       aria-label={`View ${landmark.title}`}
     >
-      <img 
-        src={landmark.image} 
-        alt={landmark.title}
+      <img
+        src={landmark.image}
+        alt={landmark.tooltipLabel || landmark.title}
+        loading="lazy"
+        decoding="async"
         className="landmark-image"
         draggable={false}
       />
@@ -60,4 +64,4 @@ const Landmark = ({ landmark, scale = 1 }) => {
   );
 };
 
-export default Landmark;
+export default memo(Landmark);
