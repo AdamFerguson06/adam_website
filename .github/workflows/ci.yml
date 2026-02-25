@@ -14,9 +14,6 @@ jobs:
   lint:
     name: Lint
     runs-on: ubuntu-latest
-    # Pre-existing lint issues in source files (false positives + strict new rules).
-    # Set to false once pre-existing issues are resolved.
-    continue-on-error: true
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4

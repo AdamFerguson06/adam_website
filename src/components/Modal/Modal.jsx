@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion'; // eslint-disable-line no-unused-vars -- motion used via JSX <motion.div>
 import useMapStore from '../../store/useMapStore';
 import { landmarks } from '../../data/projects';
 import { sectionContent } from '../../data/modalContent';
@@ -92,7 +92,7 @@ const Modal = () => {
   // Auto-expand projects that match selected skills
   useEffect(() => {
     if (selectedSkills.length === 0) {
-      setExpandedProjects({});
+      setExpandedProjects({}); // eslint-disable-line react-hooks/set-state-in-effect -- intentional: sync accordion state with skill filter
       return;
     }
 
@@ -204,6 +204,7 @@ const Modal = () => {
   // Reset expanded state when modal closes
   useEffect(() => {
     if (!isModalOpen) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- intentional: reset all UI state when modal closes
       setIsExpanded(false);
       setExpandedProjects({});
       setSelectedSkills([]);
