@@ -130,19 +130,16 @@
 }
 
 .mobile-menu-btn.modal-open {
-  z-index: 1001;
-  filter: brightness(0.5);
-  cursor: pointer;
+  z-index: 99;
+  pointer-events: none;
 }
 
 .mobile-menu-btn.modal-open:hover {
   transform: none;
-  filter: brightness(0.5);
 }
 
 .mobile-menu-btn.modal-open:active {
   transform: none;
-  filter: brightness(0.5);
 }
 
 .mobile-menu-btn.no-hover,
