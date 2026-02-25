@@ -267,7 +267,10 @@ const Modal = () => {
 
   // Auto-expand projects that match selected skills
   useEffect(() => {
-    if (selectedSkills.length === 0) return;
+    if (selectedSkills.length === 0) {
+      setExpandedProjects({});
+      return;
+    }
 
     const content = sectionContent.projects;
     if (!content?.companies) return;
@@ -285,7 +288,7 @@ const Modal = () => {
       });
     });
 
-    setExpandedProjects(prev => ({ ...prev, ...newExpandedProjects }));
+    setExpandedProjects(newExpandedProjects);
   }, [selectedSkills]);
 
   const toggleProject = (projectKey) => {
