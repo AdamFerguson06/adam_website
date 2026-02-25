@@ -7,6 +7,7 @@ const LeftPanel = ({ sidebarOpen = false, onCloseSidebar, portraitModalOpen, set
   const prevSidebarOpenRef = useRef(sidebarOpen);
   const justClosedSidebarRef = useRef(false);
   const justHandledRef = useRef(false);
+  const justHandledTimerRef = useRef(null);
   const debounceTimeoutRef = useRef(null);
   const [portraitNoHover, setPortraitNoHover] = useState(false);
 
@@ -31,13 +32,14 @@ const LeftPanel = ({ sidebarOpen = false, onCloseSidebar, portraitModalOpen, set
   useEffect(() => {
     return () => {
       if (debounceTimeoutRef.current) clearTimeout(debounceTimeoutRef.current);
+      if (justHandledTimerRef.current) clearTimeout(justHandledTimerRef.current);
     };
   }, []);
 
   const handlePortraitInteraction = (e) => {
     if (justHandledRef.current) return;
     justHandledRef.current = true;
-    setTimeout(() => { justHandledRef.current = false; }, 100);
+    justHandledTimerRef.current = setTimeout(() => { justHandledRef.current = false; }, 100);
 
     e.stopPropagation();
 

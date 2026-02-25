@@ -31,6 +31,7 @@ function App() {
   const justClosedModalRef = useRef(false);
   const hasScrolledRef = useRef(false);
   const starDebounceRef = useRef(null);
+  const justHandledTimerRef = useRef(null);
   const justHandledRef = useRef(false);
   const isModalOpen = useMapStore((state) => state.isModalOpen);
   const closeModal = useMapStore((state) => state.closeModal);
@@ -42,10 +43,11 @@ function App() {
 
   const closePortraitModal = () => setPortraitModalOpen(false);
 
-  // Clean up star debounce timeout on unmount
+  // Clean up star debounce timeouts on unmount
   useEffect(() => {
     return () => {
       if (starDebounceRef.current) clearTimeout(starDebounceRef.current);
+      if (justHandledTimerRef.current) clearTimeout(justHandledTimerRef.current);
     };
   }, []);
 
@@ -157,7 +159,7 @@ function App() {
       return;
     }
     justHandledRef.current = true;
-    starDebounceRef.current = setTimeout(() => {
+    justHandledTimerRef.current = setTimeout(() => {
       justHandledRef.current = false;
     }, MODAL_DEBOUNCE_MS);
 

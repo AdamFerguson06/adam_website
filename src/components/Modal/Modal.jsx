@@ -22,6 +22,7 @@ const Modal = () => {
   const skillDropdownRef = useRef(null);
   const modalRef = useRef(null);
   const closeButtonRef = useRef(null);
+  const lastTriggerRef = useRef(null);
 
   // Close skill dropdown when clicking outside
   useEffect(() => {
@@ -185,12 +186,20 @@ const Modal = () => {
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, [isModalOpen]);
 
+  // Capture trigger element into a ref while modal is open (before closeModal clears it)
+  useEffect(() => {
+    if (triggerElement) {
+      lastTriggerRef.current = triggerElement;
+    }
+  }, [triggerElement]);
+
   // Return focus to trigger element when modal closes
   useEffect(() => {
-    if (!isModalOpen && triggerElement) {
-      triggerElement.focus();
+    if (!isModalOpen && lastTriggerRef.current) {
+      lastTriggerRef.current.focus();
+      lastTriggerRef.current = null;
     }
-  }, [isModalOpen, triggerElement]);
+  }, [isModalOpen]);
 
   // Reset expanded state when modal closes
   useEffect(() => {
@@ -473,7 +482,7 @@ const Modal = () => {
                       aria-controls="modal-long-description"
                     >
                       <span>{isExpanded ? 'Show Less' : 'Read More'}</span>
-                      <ChevronIcon className="expand-icon" />
+                      <ChevronIcon className="expand-icon" size={16} />
                     </button>
                     <span className="modal-expand-divider">|</span>
                     <button
