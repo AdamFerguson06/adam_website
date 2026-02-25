@@ -39,7 +39,7 @@ const LeftPanel = ({ sidebarOpen = false, onCloseSidebar, portraitModalOpen, set
   const handlePortraitInteraction = (e) => {
     if (justHandledRef.current) return;
     justHandledRef.current = true;
-    justHandledTimerRef.current = setTimeout(() => { justHandledRef.current = false; }, 100);
+    justHandledTimerRef.current = setTimeout(() => { justHandledRef.current = false; }, MODAL_DEBOUNCE_MS);
 
     e.stopPropagation();
 
