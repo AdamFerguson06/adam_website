@@ -167,11 +167,27 @@ What defines me is a willingness to do whatever a project requires, even when it
     description: 'A collection of experiments, side projects, and other creative endeavors that don\'t fit neatly into other categories.',
     miscProjects: [
       {
+        name: 'The Shed Registry',
+        description: 'A free, public directory of NYC scaffolding contractors built on verified data from the NYC Open Data DOB Sidewalk Sheds dataset.',
+        siteUrl: 'https://www.theshedregistry.com/',
+        siteLabel: 'TheShedRegistry.com',
+      },
+      {
+        name: 'Hydra Bugbot',
+        description: 'Chaos engineering for code review pipelines. Finds real bugs, fixes them, then injects 2 new subtle bugs per fix 😈',
+        repoUrl: 'https://github.com/AdamFerguson06/hydra-bugbot',
+      },
+      {
         name: 'Catan Board Setup',
         description: 'Built on Christmas Eve because I got tired of arguing over whether the board was set up fairly. 50 pre-generated, rules-compliant layouts. Just hit shuffle and start playing.',
         siteUrl: 'https://catanboardsetup.com/',
         siteLabel: 'CatanBoardSetup.com',
         repoUrl: 'https://github.com/AdamFerguson06/catan-board-setup',
+      },
+      {
+        name: 'Gmail MCP Server',
+        description: 'A read-only Gmail MCP server for Claude, with three-layer security architecture ensuring messages can be searched, read, and exported but never modified.',
+        repoUrl: 'https://github.com/AdamFerguson06/gmail-mcp',
       },
     ],
   },
