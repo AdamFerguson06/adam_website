@@ -168,17 +168,26 @@ What defines me is a willingness to do whatever a project requires, even when it
     miscProjects: [
       {
         name: 'The Shed Registry',
+        logo: '/misc_logos/tsr_logo.png',
         description: 'A free, public directory of NYC scaffolding contractors built on verified data from the NYC Open Data DOB Sidewalk Sheds dataset.',
         siteUrl: 'https://www.theshedregistry.com/',
         siteLabel: 'TheShedRegistry.com',
       },
       {
-        name: 'Hydra Bugbot',
-        description: 'Chaos engineering for code review pipelines. Finds real bugs, fixes them, then injects 2 new subtle bugs per fix 😈',
+        name: 'Mada Ventures LLC 🚀',
+        logo: '/misc_logos/mada_logo.svg',
+        description: 'My personal holding company - the umbrella for side projects and consulting work outside of Falcon Media.',
+        siteUrl: 'https://madaventuresllc.com/',
+        siteLabel: 'MadaVenturesLLC.com',
+      },
+      {
+        name: 'Hydra Bugbot 😈',
+        description: 'Chaos engineering for code review pipelines. Finds real bugs, fixes them, then injects 2 new subtle bugs per fix.',
         repoUrl: 'https://github.com/AdamFerguson06/hydra-bugbot',
       },
       {
         name: 'Catan Board Setup',
+        logo: '/misc_logos/catan_logo.png',
         description: 'Built on Christmas Eve because I got tired of arguing over whether the board was set up fairly. 50 pre-generated, rules-compliant layouts. Just hit shuffle and start playing.',
         siteUrl: 'https://catanboardsetup.com/',
         siteLabel: 'CatanBoardSetup.com',

@@ -443,34 +443,62 @@ const Modal = () => {
               )}
               {content.miscProjects && (
                 <div className="misc-projects">
-                  {content.miscProjects.map((project, idx) => (
-                    <div className="misc-project-card" key={idx}>
-                      <h3 className="misc-project-name">{project.name}</h3>
-                      <p className="misc-project-description">{project.description}</p>
-                      {project.siteUrl && (
-                        <a
-                          href={project.siteUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="misc-project-site-link"
-                        >
-                          {project.siteLabel || project.siteUrl.replace(/^https?:\/\//, '').replace(/\/$/, '')}
-                          <ExternalLinkIcon size={14} />
-                        </a>
-                      )}
-                      {project.repoUrl && (
-                        <a
-                          href={project.repoUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="misc-project-repo-link"
-                        >
-                          GitHub Repo
-                          <ExternalLinkIcon size={14} />
-                        </a>
-                      )}
-                    </div>
-                  ))}
+                  {content.miscProjects.map((project, idx) => {
+                    const primaryUrl = project.siteUrl || project.repoUrl;
+                    const primaryLabel = project.siteUrl
+                      ? `Visit ${project.name}`
+                      : `View ${project.name} on GitHub`;
+                    return (
+                      <div
+                        className={`misc-project-card ${primaryUrl ? 'is-clickable' : ''}`}
+                        key={idx}
+                      >
+                        {primaryUrl && (
+                          <a
+                            href={primaryUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="misc-project-card-overlay"
+                            aria-label={primaryLabel}
+                          />
+                        )}
+                        <div className="misc-project-header">
+                          {project.logo && (
+                            <img
+                              src={project.logo}
+                              alt=""
+                              className="misc-project-logo"
+                              loading="lazy"
+                            />
+                          )}
+                          <h3 className="misc-project-name">{project.name}</h3>
+                        </div>
+                        <p className="misc-project-description">{project.description}</p>
+                        {project.siteUrl && (
+                          <a
+                            href={project.siteUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="misc-project-site-link"
+                          >
+                            {project.siteLabel || project.siteUrl.replace(/^https?:\/\//, '').replace(/\/$/, '')}
+                            <ExternalLinkIcon size={14} />
+                          </a>
+                        )}
+                        {project.repoUrl && (
+                          <a
+                            href={project.repoUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="misc-project-repo-link"
+                          >
+                            GitHub Repo
+                            <ExternalLinkIcon size={14} />
+                          </a>
+                        )}
+                      </div>
+                    );
+                  })}
                 </div>
               )}
               {content.longDescription && (
