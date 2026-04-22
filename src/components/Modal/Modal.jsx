@@ -445,7 +445,17 @@ const Modal = () => {
                 <div className="misc-projects">
                   {content.miscProjects.map((project, idx) => (
                     <div className="misc-project-card" key={idx}>
-                      <h3 className="misc-project-name">{project.name}</h3>
+                      <div className="misc-project-header">
+                        {project.logo && (
+                          <img
+                            src={project.logo}
+                            alt=""
+                            className="misc-project-logo"
+                            loading="lazy"
+                          />
+                        )}
+                        <h3 className="misc-project-name">{project.name}</h3>
+                      </div>
                       <p className="misc-project-description">{project.description}</p>
                       {project.siteUrl && (
                         <a

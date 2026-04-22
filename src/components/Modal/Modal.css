@@ -890,12 +890,27 @@
   padding: 20px;
 }
 
+.misc-project-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 8px 0;
+}
+
+.misc-project-logo {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
 .misc-project-name {
   font-family: var(--font-body);
   font-size: 15px;
   font-weight: 600;
   color: var(--text-dark);
-  margin: 0 0 8px 0;
+  margin: 0;
 }
 
 .misc-project-description {
