@@ -181,8 +181,8 @@ What defines me is a willingness to do whatever a project requires, even when it
         siteLabel: 'MadaVenturesLLC.com',
       },
       {
-        name: 'Hydra Bugbot',
-        description: 'Chaos engineering for code review pipelines. Finds real bugs, fixes them, then injects 2 new subtle bugs per fix 😈',
+        name: 'Hydra Bugbot 😈',
+        description: 'Chaos engineering for code review pipelines. Finds real bugs, fixes them, then injects 2 new subtle bugs per fix.',
         repoUrl: 'https://github.com/AdamFerguson06/hydra-bugbot',
       },
       {
