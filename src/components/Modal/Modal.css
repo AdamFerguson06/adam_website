@@ -885,9 +885,41 @@
 }
 
 .misc-project-card {
+  position: relative;
   border: 1px solid #c0c0c0;
   border-radius: 12px;
   padding: 20px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.misc-project-card.is-clickable {
+  cursor: pointer;
+}
+
+.misc-project-card.is-clickable:hover {
+  border-color: var(--text-dark);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+}
+
+.misc-project-card-overlay {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  z-index: 0;
+}
+
+.misc-project-card-overlay:focus-visible {
+  outline: 2px solid var(--text-dark);
+  outline-offset: 2px;
+}
+
+.misc-project-header,
+.misc-project-name,
+.misc-project-description {
+  position: relative;
+  z-index: 1;
+  pointer-events: none;
 }
 
 .misc-project-header {
@@ -921,6 +953,8 @@
 }
 
 .misc-project-site-link {
+  position: relative;
+  z-index: 1;
   display: flex;
   width: fit-content;
   align-items: center;
@@ -943,7 +977,10 @@
 }
 
 .misc-project-repo-link {
+  position: relative;
+  z-index: 1;
   display: inline-flex;
+  width: fit-content;
   align-items: center;
   gap: 4px;
   margin-top: 8px;
